@@ -16,7 +16,7 @@ const createWindow = (): void => {
 		}
 	});
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-	initDB();
+	// initDB();
 };
 
 app.on('ready', createWindow);
