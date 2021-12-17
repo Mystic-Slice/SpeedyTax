@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { HashRouter, Link, Route, Routes } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import { Login } from './Pages/Login';
-import TaxFilingPage from './Pages/TaxFilingPage';
+import { TaxFilingPage } from './Pages/TaxFilingPage';
 
 export interface User {
     userName: string,
