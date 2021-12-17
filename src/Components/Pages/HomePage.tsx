@@ -10,7 +10,7 @@ export interface UserInformation {
     handleChange: (input: any) => any,
 }
 
-export class HomePage extends Component {
+export class HomePage extends Component<{ signOut: () => void }> {
     state = {
         name: 'Ashwath',
         email: 'vaashwath@gmail.com',
@@ -31,6 +31,7 @@ export class HomePage extends Component {
         return (
             <div>
                 <UserInfo name={name} email={email} DOB={DOB} handleChange={this.handleChange} />
+                <Button onClick={this.props.signOut}>Sign out</Button>
                 <Button style={{display: "flex", marginTop:"10px"}} fullWidth color="primary" variant="contained" component={Link} to='/filing'>
                     Start Filing
                 </Button>

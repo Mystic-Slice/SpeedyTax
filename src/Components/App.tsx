@@ -15,14 +15,18 @@ export interface User {
 export function App() {
     const [user, setUser] = React.useState(null as User);
 
+    const signOut = () => {
+        setUser(null as User);
+    }
+
     if(!user) {
         return <Login setUser={setUser}/>
     }
-    
+
     return (
         <HashRouter>
             <Routes>
-                <Route path = '/' element={<HomePage/>}></Route>
+                <Route path = '/' element={<HomePage signOut={signOut}/>}></Route>
                 <Route path = '/filing' element={<TaxFilingPage/>}></Route>
             </Routes>
         </HashRouter>
