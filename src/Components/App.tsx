@@ -1,7 +1,19 @@
+import { Button } from '@material-ui/core';
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { HashRouter, Link, Route, Routes } from 'react-router-dom';
+import HomePage from './Pages/HomePage';
+import TaxFilingPage from './Pages/TaxFilingPage';
 
 export function App() {
-    return <div>
-        <h1>Speedy Tax</h1>
-        </div>
+    return (
+        <HashRouter>
+            <Routes>
+                <Route path = '/' element={<HomePage/>}></Route>
+                <Route path = '/filing' element={<TaxFilingPage/>}></Route>
+            </Routes>
+        </HashRouter>
+    )
 }
+
+ReactDOM.render(<App/>, document.getElementById('root'));
