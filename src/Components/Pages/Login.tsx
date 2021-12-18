@@ -1,17 +1,34 @@
-import { Button } from '@material-ui/core';
+import { Button, ButtonGroup } from '@material-ui/core';
 import React, { Component } from 'react'
 import Signin from './Views/Signin';
 import Signup from './Views/Signup';
 import { User } from '../App';
+
+const LoginStyle = {
+    width: "20%",
+    minWidth: "320px",
+    height: "fit-content",
+    minHeight: "230px",
+    border: "4px solid black",
+    borderRadius: "5px",
+    padding: "20px",
+}
+
+const ButtonGroupStyle = {
+    width: "100%"
+}
+
+const ButtonStyle = {
+    width: "50%"
+}
 
 export class Login extends Component<{ setUser: any }> {
     state = {
         method: 0
     }
 
-    switchMethod = () => {
-        const { method } = this.state;
-        this.setState({ method: method^1 })
+    switchMethod = (newMethod: number) => () => {
+        this.setState({ method: newMethod })
     }
 
     handleSubmit = (user: User) => {
@@ -19,24 +36,38 @@ export class Login extends Component<{ setUser: any }> {
         setUser(user);
     }
 
-    render() {
-        const { method } = this.state;
+    getView = (method: number) => {
         switch(method) {
             case 0:
-                return (
-                    <div>
-                        <Signup handleSubmit={this.handleSubmit}/>
-                        <Button onClick={this.switchMethod}>Sign-in</Button>
-                    </div>
-                )
+                return <Signin handleSubmit={this.handleSubmit}/>
             case 1:
-                return (
-                    <div>
-                        <Signin handleSubmit={this.handleSubmit}/>
-                        <Button onClick={this.switchMethod}>Sign-up</Button>
-                    </div>
-                )
+                return <Signup handleSubmit={this.handleSubmit}/>
         }
+    }
+
+    render() {
+        const { method } = this.state;
+        return (
+            <div style={LoginStyle}>
+                <ButtonGroup style={ButtonGroupStyle}>
+                    <Button 
+                        variant={!method ? "outlined": "contained"}
+                        disableElevation
+                        onClick={this.switchMethod(0)}
+                        style={ButtonStyle}>
+                        Sign-in
+                    </Button>
+                    <Button 
+                        variant={method ? "outlined": "contained"}
+                        disableElevation
+                        onClick={this.switchMethod(1)}
+                        style={ButtonStyle}>
+                        Sign-up
+                    </Button>
+                </ButtonGroup><br/>
+                { this.getView(method) }
+            </div>
+        )
     }
 }
 
