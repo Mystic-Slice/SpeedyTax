@@ -10,7 +10,7 @@ export interface UserInformation {
     handleChange: (input: any) => any,
 }
 
-export class HomePage extends Component<{ signOut: () => void }> {
+export class ClientHomePage extends Component<{ signOut: () => void }> {
     state = {
         name: 'Ashwath',
         email: 'vaashwath@gmail.com',
@@ -40,4 +40,4 @@ export class HomePage extends Component<{ signOut: () => void }> {
     }
 }
 
-export default HomePage
+export default ClientHomePage

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core';
-import { UserInformation } from '../HomePage';
+import { UserInformation } from '../ClientHomePage';
 
 export class UserInfoView extends Component<UserInformation> {
     state = {
