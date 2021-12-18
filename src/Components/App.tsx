@@ -48,8 +48,6 @@ export function App() {
             </HashRouter>
         )
     }
-
-
 }
 
 ReactDOM.render(<App/>, document.getElementById('root'));

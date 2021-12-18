@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, TextField } from '@material-ui/core'
+import { Button, Grid, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
 import { User } from '../../App'
 
@@ -31,13 +31,55 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
         return (
             <div>
                 <form onSubmit={this.handleSigninSubmit}>
-                    <TextField value={userName} label="Username" type={"email"} onChange={this.handleChange("userName")}/>
-                    <TextField value={password} label="Password" type={"password"} onChange={this.handleChange("password")} inputProps={{ maxLength: 20, minLength: 12 }}/>
-                    <Select value={type} label="Type" onChange={this.handleChange("type")}>
-                        <MenuItem value={"client"}>Client</MenuItem>
-                        <MenuItem value={"consultant"}>Consultant</MenuItem>
-                    </Select>
-                    <Button type="submit">Submit</Button>
+                    <TextField 
+                        value={userName} 
+                        label="Username" 
+                        type={"email"} 
+                        onChange={this.handleChange("userName")}
+                        fullWidth/>
+                    <TextField 
+                        value={password} 
+                        label="Password" 
+                        type={"password"} 
+                        onChange={this.handleChange("password")} 
+                        inputProps={{ maxLength: 20, minLength: 12 }}
+                        fullWidth/>
+                    <div style={{
+                        width: "100%",
+                        marginTop: "10px"
+                    }}>
+                        <div style={{
+                            width: "50%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                            <Select 
+                                style={{
+                                    width: "100%"
+                                }}
+                                value={type} 
+                                label="Type" 
+                                onChange={this.handleChange("type")}>
+                                <MenuItem value={"client"}>Client</MenuItem>
+                                <MenuItem value={"consultant"}>Consultant</MenuItem>
+                            </Select>
+                        </div>
+                        <div style={{
+                            width:"100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "20px"
+                        }}>
+                            <Button 
+                                type="submit"
+                                variant="contained"
+                                >
+                                Submit
+                            </Button>
+                        </div>
+                    </div>
                 </form>
             </div>
         )
