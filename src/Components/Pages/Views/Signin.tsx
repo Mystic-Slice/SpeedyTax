@@ -2,22 +2,52 @@ import { Button, Grid, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
 import { User } from '../../App'
 
+const regex = {
+    userName: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&-])[A-Za-z\d@#$!%*?&-]{8,20}$/
+}
+
 export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
 
     state = {
         userName: "",
         password: "",
-        type: "client"
+        type: "client",
+        errorUserName: false,
+        errorPassword: false
     }
 
     handleChange = (input: any) => (event: any) => {
         this.setState({ [input]: event.target.value });
     }
 
+    validate(userName: string, password: string) {
+        let error = false
+
+        let errorUserName = false
+        if(!userName.match(regex.userName)){
+            errorUserName = true
+            error = true
+        }
+
+        let errorPassword = false
+        if(!password.match(regex.password)){
+            errorPassword = true
+            error = true
+        }
+        if(!error) return true
+        this.setState({
+            errorUserName: errorUserName, 
+            errorPassword: errorPassword
+        })
+        return false
+    }
+
     handleSigninSubmit = (event: FormEvent) => {
         event.preventDefault();
         const { handleSubmit } = this.props;
         const { userName, password, type } = this.state;
+        if(!this.validate(userName, password)) return
         const user: User = {
             userName: userName,
             password: password,
@@ -28,21 +58,24 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
 
     render() {
         const { userName, password, type } = this.state;
+        const { errorUserName, errorPassword } = this.state;
         return (
             <div>
                 <form onSubmit={this.handleSigninSubmit}>
                     <TextField 
                         value={userName} 
-                        label="Username" 
-                        type={"email"} 
+                        label="Username"
+                        error={errorUserName}
+                        helperText={errorUserName ? "Invalid Email Id": ""}
                         onChange={this.handleChange("userName")}
                         fullWidth/>
                     <TextField 
                         value={password} 
-                        label="Password" 
-                        type={"password"} 
-                        onChange={this.handleChange("password")} 
-                        inputProps={{ maxLength: 20, minLength: 12 }}
+                        label="Password"
+                        type={"password"}
+                        error={errorPassword}
+                        helperText={errorPassword ? "Invalid password": ""}
+                        onChange={this.handleChange("password")}
                         fullWidth/>
                     <div style={{
                         width: "100%",
