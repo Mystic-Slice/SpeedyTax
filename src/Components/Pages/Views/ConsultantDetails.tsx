@@ -1,6 +1,7 @@
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 
+
 export class ConsultantDetails extends Component {
     state = {
         name: "Ashwath V A",
@@ -10,19 +11,36 @@ export class ConsultantDetails extends Component {
     render() {
         const { name, email, phoneNumber } = this.state;
         return (
-            <div>
-                <TextField
-                    value={name}
-                    label="Consultant Name"
-                    InputProps={{ readOnly: true }}/>
-                <TextField
-                    value={email}
-                    label="Email"
-                    InputProps={{ readOnly: true }}/>
-                <TextField
-                    value={phoneNumber}
-                    label="Phone number"
-                    InputProps={{ readOnly: true }}/>
+            <div style={{
+                width:"100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                margin:"10px"
+            }}>
+                <div style={{
+                flex:"70%",
+                
+                }}>
+                    <TextField
+                        value={name}
+                        label="Consultant Name"
+                        InputProps={{ readOnly: true }} fullWidth/>
+                    <TextField
+                        value={email}
+                        label="Email"
+                        InputProps={{ readOnly: true }} fullWidth/>
+                    <TextField
+                        value={phoneNumber}
+                        label="Phone number"
+                        InputProps={{ readOnly: true }}/>
+                </div>
+
+                <div style={{
+                flex:"30%"               
+                }}>                 
+                </div>
+                
             </div>
         )
     }
