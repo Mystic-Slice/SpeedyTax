@@ -49,10 +49,18 @@ export class ConsultantHomePage extends Component<{ signOut: () => void }> {
         return (
             <div>
                 <h1>Consultant Home Page</h1>
-                {clients.map(client => (
-                    <ClientInformationShort client={client} setClient={this.setClient}/>
-                ))}
-                <Button onClick={signOut}>Sign out</Button> 
+                <div style={{
+                        float:"right"
+                    }}>
+                       <Button color="primary" onClick={signOut}>Sign out</Button> 
+                </div>
+                <br/><br/><br/>
+                <div>
+                    {clients.map(client => (
+                        <ClientInformationShort client={client} setClient={this.setClient}/>
+                    ))}
+                </div>           
+                
             </div>
         )
     }
