@@ -23,13 +23,14 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
 
     validate(userName: string, password: string) {
         let error = false
-        let errorUserName = false
-        let errorPassword = false
 
+        let errorUserName = false
         if(!userName.match(regex.userName)){
             errorUserName = true
             error = true
         }
+
+        let errorPassword = false
         if(!password.match(regex.password)){
             errorPassword = true
             error = true
@@ -56,7 +57,8 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
     }
 
     render() {
-        const { userName, password, type, errorUserName, errorPassword } = this.state;
+        const { userName, password, type } = this.state;
+        const { errorUserName, errorPassword } = this.state;
         return (
             <div>
                 <form onSubmit={this.handleSigninSubmit}>
