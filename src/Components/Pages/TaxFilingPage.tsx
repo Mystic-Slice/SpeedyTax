@@ -42,10 +42,19 @@ export class TaxFilingPage extends Component {
                 return (
                     <div>
                         <h1>Meet with consultant</h1>
-                        <ConsultantDetails/>
-                        <Button color="primary" variant="contained" component={Link} to="/">Go back to profile</Button>
+                        <Button color="primary" variant="contained" component={Link} to="/">Home</Button>
+                        <ConsultantDetails/>  
+                        <div style={{
+                        float:"left"
+                        }}>
                         <Button color="primary" variant="contained" onClick={this.prevStep}>Previous</Button>
+                        </div>                    
+                        
+                        <div style={{
+                        float:"right"
+                        }}>
                         <Button color="primary" variant="contained" onClick={this.nextStep}>Next</Button>
+                        </div>                          
                     </div>
                 )
             case 3:
