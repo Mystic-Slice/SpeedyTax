@@ -76,7 +76,7 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
                                 type="submit"
                                 variant="contained"
                                 >
-                                Submit
+                                Sign in
                             </Button>
                         </div>
                     </div>

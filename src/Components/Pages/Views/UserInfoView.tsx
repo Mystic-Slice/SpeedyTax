@@ -24,6 +24,7 @@ export class UserInfoView extends Component<UserInformation> {
                     InputProps = {{
                         readOnly: !this.state.isEditMode
                     }}
+                    fullWidth
                 />
                 <TextField
                     placeholder="Enter you email"
@@ -34,6 +35,7 @@ export class UserInfoView extends Component<UserInformation> {
                     InputProps = {{
                         readOnly: !this.state.isEditMode
                     }}
+                    fullWidth
                 />
                 <TextField
                     placeholder="Enter you name"
@@ -45,7 +47,18 @@ export class UserInfoView extends Component<UserInformation> {
                         readOnly: !this.state.isEditMode
                     }}
                 />
-                <Button color="primary" variant="contained" onClick={this.switchMode}>{this.state.isEditMode?"Confirm": "Edit"}</Button>
+
+                <div style={{
+                        display:"inline",
+                        float:"right",
+                        marginTop: "30px"
+                    }}>
+                        <Button color="primary" variant="contained" 
+                            onClick={this.switchMode} >
+                            {this.state.isEditMode?"Confirm": "Edit"}
+                        </Button>
+                    </div>
+
             </div>
         )
     }
