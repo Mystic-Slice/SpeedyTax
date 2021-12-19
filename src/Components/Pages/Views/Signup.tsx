@@ -41,8 +41,9 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         value={userName} 
                         label="Username" 
                         type={"email"} 
-                        onChange={this.handleChange("userName")}>
+                        onChange={this.handleChange("userName")} fullWidth>
                         Username:
+                        
                     </TextField>
 
                     <TextField
@@ -52,7 +53,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         onChange={this.handleChange("password")} 
                         inputProps={{ 
                             minLength: 8, 
-                            maxLength: 20 }}>
+                            maxLength: 20 }} fullWidth>
                         Password:
                     </TextField>
 
@@ -64,7 +65,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         inputProps={{
                             minLength: 10,
                             maxLength: 10
-                        }}>
+                        }} fullWidth>
                         Pan id:
                     </TextField>
 
@@ -72,7 +73,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         value={firstName} 
                         label="First Name" 
                         type={"text"} 
-                        onChange={this.handleChange("firstName")}>
+                        onChange={this.handleChange("firstName")} fullWidth>
                         First Name:
                     </TextField>
 
@@ -80,7 +81,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         value={lastName} 
                         label="Last Name" 
                         type="text" 
-                        onChange={this.handleChange("lastName")}>
+                        onChange={this.handleChange("lastName")} fullWidth>
                         Last Name:
                     </TextField>
 
@@ -92,13 +93,13 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         inputProps={{
                             minLength: 10,
                             maxLength: 10
-                        }}/>
+                        }} fullWidth/>
 
                     <TextField 
                         value={dob} 
                         label="Date of Birth"
                         onChange={this.handleChange("dob")}
-                        type="text"/>
+                        type="text" fullWidth/>
 
                     <TextField 
                         value={aadharNumber} 
@@ -108,9 +109,22 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                         inputProps={{
                             minLength: 10,
                             maxLength: 10
-                        }}/>
-                        
-                    <Button type="submit">Submit</Button>
+                        }} fullWidth/>
+
+                        <div style={{
+                            width:"100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "20px"
+                        }}>
+                            <Button 
+                                type="submit"
+                                variant="contained"
+                                >
+                                Sign up
+                            </Button>
+                        </div>
                 </form>
             </div>
         )
