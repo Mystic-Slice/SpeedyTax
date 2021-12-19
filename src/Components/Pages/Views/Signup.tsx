@@ -6,8 +6,8 @@ const regex = {
     userName: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#@$!%*?&-])[A-Za-z\d@#$!%*?&-]{8,20}$/,
     panId: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
-    firstName: /^[A-Za-z]{1,29}$/,
-    lastName: /^[A-Za-z]{1,29}$/,
+    firstName: /^[A-Za-z ]{1,29}$/,
+    lastName: /^[A-Za-z ]{1,29}$/,
     phoneNumber: /^[0-9]{10}$/,
     aadharNumber: /^[0-9]{12}$/
 }
@@ -96,7 +96,6 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                 error = true
             }
 
-            if(!error) return true
             this.setState({
                 errorUserName: errorUserName,
                 errorPassword: errorPassword,
@@ -107,7 +106,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                 errorDob: errorDob,
                 errorAadharNumber: errorAadharNumber
             })
-            return false
+            return !error
         }
 
     // TODO: Include the new user in the database

@@ -4,17 +4,24 @@ import { Button } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
 
 export interface UserInformation {
-    name: string,
+    firstName: string,
+    lastName: string,
     email: string,
-    DOB: string,
-    handleChange: (input: any) => any,
+    phoneNumber: string,
+    panId: string,
+    aadharNumber: string,
+    dob: string
 }
 
 export class ClientHomePage extends Component<{ signOut: () => void }> {
     state = {
-        name: 'Ashwath',
-        email: 'vaashwath@gmail.com',
-        DOB: '21-07-2021'
+        firstName: "Ashwath",
+        lastName: "V A",
+        email: "vaashwath@gmail.com",
+        phoneNumber: "7339099303",
+        panId: "ASDFG1234A",
+        aadharNumber: '111122223333',
+        dob: "2002-07-21"
     }
 
     handleChange = (input: any) => (event: any) => {
@@ -27,19 +34,29 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
     }    
 
     render() {
-        const { name, email, DOB } = this.state;
         return (
-            <div>
-                    <div style={{
-                        float:"right",
-                    }}>
-                        <Button color="primary" onClick={this.props.signOut}>Sign out</Button>
-                    </div>
-                
-                <UserInfo name={name} email={email} DOB={DOB} handleChange={this.handleChange} />                
-                <Button style=
-                    {{display: "flex", marginTop:"10px"}} 
-                     color="primary" variant="contained" component={Link} to='/filing'>
+            <div style={{
+                maxWidth: "500px"
+            }}>
+                <Button style={{
+                    float: "right",
+                    margin: "30px",
+                    marginLeft: "0"
+                    }} 
+                    variant="contained"
+                    color="primary" 
+                    onClick={this.props.signOut}>
+                    Sign out
+                    </Button>              
+                <UserInfo user={this.state as UserInformation} handleChange={this.handleChange} />                
+                <Button style={{
+                        display: "flex",
+                        marginTop:"10px"
+                    }} 
+                    color="primary" 
+                    variant="contained" 
+                    component={Link} 
+                    to='/filing'>
                     Start Filing
                 </Button>
             </div>

@@ -10,8 +10,8 @@ const regex = {
 export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
 
     state = {
-        userName: "",
-        password: "",
+        userName: "vaashwath@gmail.com",
+        password: "Aa#1asdf",
         type: "client",
         errorUserName: false,
         errorPassword: false
@@ -35,12 +35,12 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
             errorPassword = true
             error = true
         }
-        if(!error) return true
+
         this.setState({
             errorUserName: errorUserName, 
             errorPassword: errorPassword
         })
-        return false
+        return !error
     }
 
     handleSigninSubmit = (event: FormEvent) => {
