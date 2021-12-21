@@ -3,12 +3,29 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ConsultantDetails from './Views/ConsultantDetails'
 import RefundStatus from './Views/RefundStatus'
-import { TaxInfoView } from './Views/TaxInfoView'
+import { TaxInformation, TaxInfoView } from './Views/TaxInfoView'
 
 export class TaxFilingPage extends Component {
     state = {
         step: initStep(),
-        primaryIncome: 0
+        primaryIncomeAmount: "150000",
+        primaryIncomeCompany: "Google India",
+        primaryIncomeDocument: "google_income.pdf",
+        rentAmount: "12000",
+        rentDoorNo: "54",
+        rentStreetName: "D B Road",
+        rentDocument: "rental_agreement.pdf",
+        pfAmount: "400000",
+        pfInterest: "7%",
+        pfBankName: "SBI",
+        pfDocument: "pf_statement.pdf",
+        houseLoanAmount: "1600000",
+        houseLoanInterest: "6%",
+        houseLoanBankName: "SBI",
+        houseLoanDocument: "house_loan.pdf",
+        donationAmount: "200000",
+        donationTrustName: "Udhavum Karangal",
+        donationDocument: "donation_receipt.pdf"
     }
 
     handleChange = (input: any) => (event: any) => {
@@ -26,13 +43,38 @@ export class TaxFilingPage extends Component {
     }
 
     render() {
-        const { step, primaryIncome } = this.state;
+        const { step, primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
+            rentAmount, rentDoorNo, rentStreetName, rentDocument,
+            pfAmount, pfInterest, pfBankName, pfDocument,
+            houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument,
+            donationAmount, donationTrustName, donationDocument } = this.state
+
+        const clientTaxInfo: TaxInformation = {
+            primaryIncomeAmount: primaryIncomeAmount,
+            primaryIncomeCompany: primaryIncomeCompany,
+            primaryIncomeDocument: primaryIncomeDocument,
+            rentAmount: rentAmount,
+            rentDoorNo: rentDoorNo,
+            rentStreetName: rentStreetName,
+            rentDocument: rentDocument,
+            pfAmount: pfAmount,
+            pfInterest: pfInterest,
+            pfBankName: pfBankName,
+            pfDocument: pfDocument,
+            houseLoanAmount: houseLoanAmount,
+            houseLoanInterest: houseLoanInterest,
+            houseLoanBankName: houseLoanBankName,
+            houseLoanDocument: houseLoanDocument,
+            donationAmount: donationAmount,
+            donationTrustName: donationTrustName,
+            donationDocument: donationDocument
+        }
         switch (step) {
             case 1:
                 return (
                     <div>
                         <h1>Tax Information</h1>
-                        <TaxInfoView primaryIncome={primaryIncome} handleChange={this.handleChange}/>
+                        <TaxInfoView clientTaxInfo={clientTaxInfo} handleChange={this.handleChange}/>
                         <Button color="primary" variant="contained" component={Link} to="/">Go back to profile</Button>
                         <Button color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
                         <Button color="primary" variant="contained" onClick={this.nextStep}>Next</Button>
