@@ -35,7 +35,6 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
             const { firstName, lastName, email, phoneNumber, panId, aadharNumber, dob } = this.props.user
             if(!this.validate(firstName, lastName, email, phoneNumber, panId, aadharNumber, dob)) return false
         }
-        console.log(isEditMode ? "Save": "")
         this.setState({isEditMode: isEditMode ? false : true});
     }
 
