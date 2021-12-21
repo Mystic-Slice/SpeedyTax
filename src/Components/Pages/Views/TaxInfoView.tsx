@@ -256,14 +256,28 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPrimaryIncomeCompany ? "Please fill Company Name": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                    <TextField
+                    {/* <TextField
                         value={primaryIncomeDocument}
                         label="Form-16"
                         onChange={handleChange("primaryIncomeDocument")}
                         error={errorPrimaryIncomeDocument}
                         helperText={errorPrimaryIncomeDocument ? "Invalid Document": ""}
                         margin="normal"
-                        InputProps = {{ readOnly: !isEditMode }}/>
+                        InputProps = {{ readOnly: !isEditMode }}/> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            marginTop: "20px",
+                            marginRight: "0"
+                        }}
+                        >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
                 <h1 style={{margin:'1px'}}>Rent</h1>
                     <TextField
                         value={rentAmount}
@@ -289,14 +303,28 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorRentStreetName ? "Please fill Street name": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                    <TextField
+                    {/* <TextField
                         value={rentDocument}
                         label="Rent Agreement"
                         onChange={handleChange("rentDocument")}
                         error={errorRentDocument}
                         helperText={errorRentDocument ? "Invalid Document": ""}
                         margin="normal"
-                        InputProps = {{ readOnly: !isEditMode }}/>
+                        InputProps = {{ readOnly: !isEditMode }}/> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            marginTop: "20px",
+                            marginRight: "0"
+                        }}
+                        >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
                 <h1 style={{margin:'1px'}} >PF</h1>
                     <TextField
                         value={pfAmount}
@@ -322,14 +350,28 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPfBankName ? "Please fill Bank Name": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                    <TextField
+                    {/* <TextField
                         value={pfDocument}
                         label="PF Document"
                         onChange={handleChange("pfDocument")}
                         error={errorPfDocument}
                         helperText={errorPfDocument ? "Invalid Document": ""}
                         margin="normal"
-                        InputProps = {{ readOnly: !isEditMode }}/>
+                        InputProps = {{ readOnly: !isEditMode }}/> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            marginTop: "20px",
+                            marginRight: "0"
+                        }}
+                        >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
                 <h1 style={{margin:'1px'}} >House Loan</h1>
                     <TextField
                         value={houseLoanAmount}
@@ -355,14 +397,29 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorHouseLoanBankName ? "Please fill Bank Name": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                    <TextField
+                    {/* <TextField
                         value={houseLoanDocument}
                         label="Loan Document"
                         onChange={handleChange("houseLoanDocument")}
                         error={errorHouseLoanDocument}
                         helperText={errorHouseLoanDocument ? "Invalid Document": ""}
                         margin="normal"
-                        InputProps = {{ readOnly: !isEditMode }}/>
+
+                    InputProps = {{ readOnly: !isEditMode }}/> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            marginTop: "20px",
+                            marginRight: "0"
+                        }}
+                        >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
                 <h1 style={{margin:'1px'}} >Donation</h1>
                     <TextField
                         value={donationAmount}
@@ -380,14 +437,30 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorDonationTrustName ? "Please fill Trust Name": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                    <TextField
+                    {/* <TextField
                         value={donationDocument}
                         label="Donation Document"
                         onChange={handleChange("donationDocument")}
                         error={errorDonationDocument}
                         helperText={errorDonationDocument ? "Invalid Document": ""}
                         margin="normal"
-                        InputProps = {{ readOnly: !isEditMode }}/>
+
+                        InputProps = {{ readOnly: !isEditMode }}/> */}
+                    <Button
+                        variant="contained"
+                        component="label"
+                        style={{
+                            marginTop: "20px",
+                            marginRight: "0"
+                        }}
+                        >
+                        Upload File
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
+
                     <div style={{
                         display: "inline",
                         float: "right",
@@ -400,7 +473,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         onClick={this.switchEditMode}>
                         {isEditMode?"Save": "Edit"}
                         </Button>
-                    </div>                    
+                    </div>
             </div>
         )
     }
