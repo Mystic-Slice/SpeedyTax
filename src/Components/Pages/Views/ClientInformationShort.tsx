@@ -14,31 +14,31 @@ export class ClientInformationShort extends Component<{ client: ClientInformatio
                         label="Client Name"
                         InputProps={{
                             readOnly: true
-                        }}/>
+                        }} fullWidth/>
                     <TextField
                         value={email}
                         label="Email Id"
                         InputProps={{
                             readOnly: true
-                        }}/>
+                        }} fullWidth/>
                     <TextField
                         value={panId}
                         label="Pan Id"
                         InputProps={{
                             readOnly: true
-                        }}/>
+                        }} fullWidth/>
                     <TextField
                         value={meetingDate}
                         label="Meeting Date"
                         InputProps={{
                             readOnly: true
-                        }}/>
+                        }} fullWidth/>
                     <TextField
                         value={meetingTime}
                         label="Meeting Time"
                         InputProps={{
                             readOnly: true
-                        }}/>
+                        }} fullWidth/>
                 </ButtonBase>
             </Card>
         )

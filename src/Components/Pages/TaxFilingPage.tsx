@@ -74,10 +74,20 @@ export class TaxFilingPage extends Component {
                 return (
                     <div>
                         <h1>Tax Information</h1>
+                        <Button color="primary" variant="contained" component={Link} to="/">Home</Button>
                         <TaxInfoView clientTaxInfo={clientTaxInfo} handleChange={this.handleChange}/>
-                        <Button color="primary" variant="contained" component={Link} to="/">Go back to profile</Button>
+
+                        <div style={{
+                        float:"left"
+                        }}>
                         <Button color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
+                        </div>      
+                        <div style={{
+                        float:"right"
+                        }}>
                         <Button color="primary" variant="contained" onClick={this.nextStep}>Next</Button>
+                        </div>             
+                                           
                     </div>
                 )
             case 2:
