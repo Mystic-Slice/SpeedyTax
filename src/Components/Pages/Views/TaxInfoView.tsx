@@ -232,8 +232,13 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             errorHouseLoanAmount, errorHouseLoanInterest, errorHouseLoanBankName, errorHouseLoanDocument,
             errorDonationAmount, errorDonationTrustName, errorDonationDocument } = this.state;
         return (
-            <div>
-                <h1>Primary Income:</h1>
+            <div 
+            style={{border:'5px solid black',
+             padding:'10px',
+             margin:'20px',
+             borderRadius:'5px'}}
+            >
+                <h1 style={{margin:'1px'}}>Primary Income:</h1>
                     <TextField
                         value={primaryIncomeAmount}
                         label="Income Amount"
@@ -259,7 +264,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPrimaryIncomeDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                <h1>Rent</h1>
+                <h1 style={{margin:'1px'}}>Rent</h1>
                     <TextField
                         value={rentAmount}
                         label="Rent Amount"
@@ -292,7 +297,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorRentDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                <h1>PF</h1>
+                <h1 style={{margin:'1px'}} >PF</h1>
                     <TextField
                         value={pfAmount}
                         label="PF Amount"
@@ -325,7 +330,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPfDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                <h1>House Loan</h1>
+                <h1 style={{margin:'1px'}} >House Loan</h1>
                     <TextField
                         value={houseLoanAmount}
                         label="Loan Amount"
@@ -358,7 +363,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorHouseLoanDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                <h1>Donation</h1>
+                <h1 style={{margin:'1px'}} >Donation</h1>
                     <TextField
                         value={donationAmount}
                         label="Donation Amount"
@@ -383,12 +388,19 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorDonationDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/>
-                <Button 
-                    color="primary" 
-                    variant="contained" 
-                    onClick={this.switchEditMode}>
-                    {isEditMode?"Save": "Edit"}
-                    </Button>
+                    <div style={{
+                        display: "inline",
+                        float: "right",
+                        marginTop: "30px",
+                        paddingLeft:"10px"
+                    }}>
+                        <Button 
+                        color="primary" 
+                        variant="contained" 
+                        onClick={this.switchEditMode}>
+                        {isEditMode?"Save": "Edit"}
+                        </Button>
+                    </div>                    
             </div>
         )
     }
