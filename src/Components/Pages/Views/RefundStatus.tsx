@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import { Button, Card, TextField } from '@material-ui/core';
+import DownloadIcon from '@mui/icons-material/Download';
+import React, { Component } from 'react';
 
 export class RefundStatus extends Component {
     state = {
@@ -7,15 +9,52 @@ export class RefundStatus extends Component {
     render() {
         const { status } = this.state;
 
-        if(!status) {
-            return (
-                <h1>Tax Filed. Refund Pending.</h1>
-            )
-        }else {
-            return (
-                <h1>Refund Successful!</h1>
-            )
-        }
+        return (
+            <div>
+                <Card 
+                    style={{
+                        display: "flex"
+                    }}
+                >                    
+                    <div
+                        style={{
+                            flex: "60%"
+                        }}
+                        >
+                    <TextField
+                        value="555-6666"
+                        label="Application Number"
+                        fullWidth
+                        />
+                    <TextField
+                        value="01/01/2021"
+                        label="Application Date"
+                        fullWidth
+                        />
+                    </div>
+                    <div style={{flex: "40%", flexDirection: "column", backgroundColor: "blue"}}>
+                        <Card style={{
+                            width: "100%",
+                            height: "70%",
+                            backgroundColor: status ? "green": "red",
+                            margin: "auto"
+                        }}>
+                        {status?"Successful": "Pending"}
+                        </Card>
+                        <Button 
+                            style={{
+                                width: "100%",
+                                height: "30%"
+                            }}
+                            endIcon={<DownloadIcon/>}>
+                            Download Tax Summary
+                        </Button>
+
+                    </div>
+
+                </Card>
+            </div>
+        )
     }
 }
 
