@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
-
+import { appTheme } from '../../App';
 
 export class ConsultantDetails extends Component {
     state = {
@@ -16,7 +16,7 @@ export class ConsultantDetails extends Component {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                margin:"10px"
+                margin:"10px",
             }}>
                 <div style={{
                 flex:"70%",

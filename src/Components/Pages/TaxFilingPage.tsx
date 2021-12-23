@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import ConsultantDetails from './Views/ConsultantDetails'
 import RefundStatus from './Views/RefundStatus'
 import { TaxInformation, TaxInfoView } from './Views/TaxInfoView'
+import { appTheme } from '../App'
 
 export class TaxFilingPage extends Component {
     state = {
@@ -72,51 +73,117 @@ export class TaxFilingPage extends Component {
         switch (step) {
             case 1:
                 return (
-                    <div>
-                        <h1>Tax Information</h1>
-                        <Button color="primary" variant="contained" component={Link} to="/">Home</Button>
-                        <TaxInfoView clientTaxInfo={clientTaxInfo} handleChange={this.handleChange}/>
-
+                    <div
+                        style={{border:'5px solid black',
+                        padding:'10px',
+                        margin:'20px',
+                        borderRadius:'5px',
+                        backgroundColor:appTheme.secondaryColor
+                    }} 
+                    >
+                        <div style={{                            
+                            float:"left",
+                            marginTop:"10px",                        
+                        }}
+                        >
+                            <Button style={{
+                                backgroundColor:appTheme.primaryAccentColor
+                            }} 
+                            variant="contained" component={Link} to="/">Home</Button>
+                        </div>
+                        
+                        <h1 style={{textAlign:"center", marginTop:"0px"}}>Tax Information</h1>                       
+                        <TaxInfoView clientTaxInfo={clientTaxInfo} handleChange={this.handleChange}/>  
                         <div style={{
                         float:"left"
                         }}>
-                        <Button color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor,
+                        }} 
+                        color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
                         </div>      
                         <div style={{
                         float:"right"
                         }}>
-                        <Button color="primary" variant="contained" onClick={this.nextStep}>Next</Button>
-                        </div>             
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor
+                        }} 
+                        variant="contained" onClick={this.nextStep}>Next</Button>
+                        </div>          
                                            
                     </div>
                 )
             case 2:
                 return (
-                    <div>
-                        <h1>Meet with consultant</h1>
-                        <Button color="primary" variant="contained" component={Link} to="/">Home</Button>
+                    <div style={{border:'5px solid black',
+                    padding:'10px',
+                    margin:'20px',
+                    borderRadius:'5px',
+                    backgroundColor:appTheme.secondaryColor
+                }}
+                    >
+                        <h1 style={{marginTop:"0px"}}>Meet with consultant</h1>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor
+                        }}
+                        variant="contained" component={Link} to="/">Home</Button>
                         <ConsultantDetails/>  
                         <div style={{
                         float:"left"
                         }}>
-                        <Button color="primary" variant="contained" onClick={this.prevStep}>Previous</Button>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor
+                        }}
+                        variant="contained" onClick={this.prevStep}>Previous</Button>
                         </div>                    
                         
                         <div style={{
                         float:"right"
                         }}>
-                        <Button color="primary" variant="contained" onClick={this.nextStep}>Next</Button>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor
+                        }}
+                        variant="contained" onClick={this.nextStep}>Next</Button>
                         </div>                          
                     </div>
                 )
             case 3:
                 return (
-                    <div>
-                        <h1>Refund Status</h1>
+                    <div style={{border:'5px solid black',
+                    padding:'10px',
+                    margin:'20px',
+                    borderRadius:'5px',
+                    backgroundColor:appTheme.secondaryColor
+                    }}
+                    >
+                        <h1 style={{marginTop:"0px"}}>Refund Status</h1>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor,
+                            marginTop:'0px',
+                            marginBottom:'20px'
+                        }} 
+                        variant="contained" component={Link} to="/">Home</Button>
                         <RefundStatus/>
-                        <Button color="primary" variant="contained" component={Link} to="/">Go back to profile</Button>
-                        <Button color="primary" variant="contained" onClick={this.prevStep}>Previous</Button>
-                        <Button color="primary" variant="contained" onClick={this.nextStep} disabled>Next</Button>
+                        
+                        <div style={{
+                        float:"left"
+                        }}>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor,
+                            marginTop:"20px"
+                        }}
+                        variant="contained" onClick={this.prevStep}>Previous</Button>
+                        </div>                    
+                        
+                        <div style={{
+                        float:"right"
+                        }}>
+                        <Button style={{
+                            backgroundColor:appTheme.primaryAccentColor,
+                            marginTop:"20px"
+                        }}
+                        variant="contained" onClick={this.nextStep}>Next</Button>
+                        </div>   
                     </div>
                 )
         }

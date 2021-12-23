@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core'
 import React, { Component } from 'react'
 import ClientInformationDetail from './Views/ClientInformationDetail';
 import ClientInformationShort from './Views/ClientInformationShort';
+import { appTheme } from '../App';
 
 export interface ClientInformation {
     name: string,
@@ -47,12 +48,21 @@ export class ConsultantHomePage extends Component<{ signOut: () => void }> {
 
         const { signOut } = this.props;
         return (
-            <div>
+            <div style={{border:'5px solid black',
+                padding:'10px',
+                margin:'20px',
+                borderRadius:'5px',
+                backgroundColor:appTheme.secondaryColor
+            }}>
                 <h1>Consultant Home Page</h1>
                 <div style={{
                         float:"right"
                     }}>
-                       <Button color="primary" onClick={signOut}>Sign out</Button> 
+                       <Button style={{
+                           backgroundColor:appTheme.primaryAccentColor,
+                           boxShadow:"2px 2px"
+                       }} 
+                       onClick={signOut}>Sign out</Button> 
                 </div>
                 <br/><br/><br/>
                 <div>

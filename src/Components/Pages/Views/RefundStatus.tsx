@@ -1,6 +1,7 @@
 import { Button, Card, TextField } from '@material-ui/core';
 import DownloadIcon from '@mui/icons-material/Download';
 import React, { Component } from 'react';
+import { appTheme } from '../../App';
 
 export class RefundStatus extends Component {
     state = {
@@ -32,19 +33,21 @@ export class RefundStatus extends Component {
                         fullWidth
                         />
                     </div>
-                    <div style={{flex: "40%", flexDirection: "column", backgroundColor: "blue"}}>
+                    <div style={{flex: "40%", flexDirection: "column", backgroundColor: appTheme.secondaryAccentColor}}>
                         <Card style={{
                             width: "100%",
                             height: "70%",
                             backgroundColor: status ? "green": "red",
-                            margin: "auto"
+                            margin: "auto",
+                            textAlign:"center"
                         }}>
                         {status?"Successful": "Pending"}
                         </Card>
                         <Button 
                             style={{
                                 width: "100%",
-                                height: "30%"
+                                height: "30%",
+                                color:"white"
                             }}
                             endIcon={<DownloadIcon/>}>
                             Download Tax Summary

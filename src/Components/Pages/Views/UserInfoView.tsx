@@ -3,6 +3,7 @@ import { Button, TextField } from '@material-ui/core';
 import { UserInformation } from '../ClientHomePage';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
+import {appTheme} from '../../App'
 
 const regex = {
     firstName: /^[A-Za-z ]{1,29}$/,
@@ -230,7 +231,11 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                         float: "right",
                         marginTop: "30px"
                     }}>
-                        <Button color="primary" variant="contained" 
+                        <Button 
+                            style={{
+                                backgroundColor:appTheme.secondaryAccentColor
+                            }}
+                        color="primary" variant="contained" 
                             onClick={this.switchEditMode} 
                             startIcon={this.state.isEditMode?<SaveIcon/>: <EditIcon/>} >
                             {this.state.isEditMode?"Save": "Edit"}
