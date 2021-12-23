@@ -1,6 +1,7 @@
 import { Button, TextField } from '@material-ui/core'
 import { MuiThemeProvider } from 'material-ui/styles'
 import React, { Component } from 'react'
+import { appTheme } from '../../App'
 
 export interface TaxInformation {
     primaryIncomeAmount: string,
@@ -232,13 +233,8 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             errorHouseLoanAmount, errorHouseLoanInterest, errorHouseLoanBankName, errorHouseLoanDocument,
             errorDonationAmount, errorDonationTrustName, errorDonationDocument } = this.state;
         return (
-            <div 
-            style={{border:'5px solid black',
-             padding:'10px',
-             margin:'20px',
-             borderRadius:'5px'}}
-            >
-                <h1 style={{margin:'1px'}}>Primary Income:</h1>
+            <div>
+                <h1 style={{margin:'1px'}}>Primary Income:</h1>                
                     <TextField
                         value={primaryIncomeAmount}
                         label="Income Amount"
@@ -264,20 +260,23 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPrimaryIncomeDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/> */}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{
-                            marginTop: "20px",
-                            marginRight: "0"
+
+                        <Button style={{
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            backgroundColor:appTheme.secondaryAccentColor
                         }}
-                        >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+                            variant="contained"
+                            component="label"
+                            color="primary"
+                            >
+                            Upload File
+                            <input
+                                type="file"
+                                hidden
+                            />
+                        </Button> 
+                   
                 <h1 style={{margin:'1px'}}>Rent</h1>
                     <TextField
                         value={rentAmount}
@@ -311,20 +310,26 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorRentDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/> */}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{
-                            marginTop: "20px",
-                            marginRight: "0"
+                    <div style={{
+                        display: "inline",
+                        float: "right",
+                        marginTop: "30px",
+                        paddingLeft:"10px",
+                    }}>
+                        <Button style={{
+                            backgroundColor:appTheme.secondaryAccentColor
                         }}
-                        >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+                            variant="contained"
+                            component="label"
+                            color="primary"
+                            >
+                            Upload File
+                            <input
+                                type="file"
+                                hidden
+                            />
+                        </Button>
+                    </div> 
                 <h1 style={{margin:'1px'}} >PF</h1>
                     <TextField
                         value={pfAmount}
@@ -358,20 +363,27 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         helperText={errorPfDocument ? "Invalid Document": ""}
                         margin="normal"
                         InputProps = {{ readOnly: !isEditMode }}/> */}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{
-                            marginTop: "20px",
-                            marginRight: "0"
+                    <div style={{
+                        display: "inline",
+                        float: "right",
+                        marginTop: "30px",
+                        paddingLeft:"10px",
+                        
+                    }}>
+                        <Button style={{
+                            backgroundColor:appTheme.secondaryAccentColor
                         }}
-                        >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+                            variant="contained"
+                            component="label"
+                            color="primary"
+                            >
+                            Upload File
+                            <input
+                                type="file"
+                                hidden
+                            />
+                        </Button>
+                    </div> 
                 <h1 style={{margin:'1px'}} >House Loan</h1>
                     <TextField
                         value={houseLoanAmount}
@@ -406,20 +418,26 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         margin="normal"
 
                     InputProps = {{ readOnly: !isEditMode }}/> */}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{
-                            marginTop: "20px",
-                            marginRight: "0"
+                    <div style={{
+                        display: "inline",
+                        float: "right",
+                        marginTop: "30px",
+                        paddingLeft:"10px",
+                    }}>
+                        <Button style={{
+                            backgroundColor:appTheme.secondaryAccentColor
                         }}
-                        >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+                            variant="contained"
+                            component="label"
+                            color="primary"
+                            >
+                            Upload File
+                            <input
+                                type="file"
+                                hidden
+                            />
+                        </Button>
+                    </div> 
                 <h1 style={{margin:'1px'}} >Donation</h1>
                     <TextField
                         value={donationAmount}
@@ -446,34 +464,41 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                         margin="normal"
 
                         InputProps = {{ readOnly: !isEditMode }}/> */}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{
-                            marginTop: "20px",
-                            marginRight: "0"
+                   
+                        <Button style={{
+                            marginTop:"30px" ,
+                            marginLeft:"10px",
+                            backgroundColor:appTheme.secondaryAccentColor
                         }}
-                        >
-                        Upload File
-                        <input
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+                            variant="contained"
+                            component="label"
+                            color="primary"
+                            >
+                            Upload File
+                            <input
+                                type="file"
+                                hidden
+                            />
+                        </Button>
 
-                    <div style={{
+                <div style={{
                         display: "inline",
                         float: "right",
                         marginTop: "30px",
                         paddingLeft:"10px"
                     }}>
-                        <Button 
+                        <Button style={{
+                            backgroundColor:appTheme.secondaryAccentColor
+                        }} 
+
                         color="primary" 
                         variant="contained" 
                         onClick={this.switchEditMode}>
                         {isEditMode?"Save": "Edit"}
-                        </Button>
-                    </div>
+                </Button>
+
+                </div >
+                
             </div>
         )
     }

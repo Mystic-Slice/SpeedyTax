@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Signin from './Views/Signin';
 import Signup from './Views/Signup';
 import { User } from '../App';
+import { appTheme } from '../App';
 
 const LoginStyle = {
     width: "20%",
@@ -12,6 +13,7 @@ const LoginStyle = {
     border: "4px solid black",
     borderRadius: "5px",
     padding: "20px",
+    backgroundColor:"#f5f5f5",
 }
 
 const ButtonGroupStyle = {
@@ -19,6 +21,8 @@ const ButtonGroupStyle = {
 }
 
 const ButtonStyle = {
+    backgroundColor:"appTheme.secondaryAccentColor",
+    color:"white",
     width: "50%"
 }
 
@@ -54,14 +58,24 @@ export class Login extends Component<{ setUser: any }> {
                         variant={!method ? "outlined": "contained"}
                         disableElevation
                         onClick={this.switchMethod(0)}
-                        style={ButtonStyle}>
+                        style={{
+                            width: "50%",
+                            backgroundColor:!method?"white":appTheme.secondaryAccentColor,
+                            color:!method?"black":"white",
+
+                        }}>
                         Sign-in
                     </Button>
                     <Button 
                         variant={method ? "outlined": "contained"}
                         disableElevation
                         onClick={this.switchMethod(1)}
-                        style={ButtonStyle}>
+                        style={{
+                            width: "50%",
+                            backgroundColor:method?"white":appTheme.secondaryAccentColor,
+                            color:method?"black":"white"
+
+                        }}>
                         Sign-up
                     </Button>
                 </ButtonGroup><br/>

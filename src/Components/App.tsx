@@ -13,6 +13,14 @@ export interface User {
     type: "client" | "consultant"
 }
 
+
+export const appTheme = {
+    primaryColor:"#3fc1c9",
+    secondaryColor:"#f5f5f5",
+    primaryAccentColor:"#fc5185",
+    secondaryAccentColor:"#364f6b"
+}
+
 export function App() {
     const [user, setUser] = React.useState(null as User);
 

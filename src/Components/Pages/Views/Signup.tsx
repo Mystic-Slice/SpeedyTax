@@ -1,6 +1,7 @@
 import { Button, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
 import { User } from '../../App'
+import { appTheme } from '../../App'
 
 const regex = {
     userName: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -220,6 +221,10 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                             marginTop: "20px"
                         }}>
                             <Button 
+                                style={{
+                                    backgroundColor: appTheme.primaryAccentColor,
+                                    boxShadow:"2px 2px"
+                                }}
                                 type="submit"
                                 variant="contained">
                                 Sign up

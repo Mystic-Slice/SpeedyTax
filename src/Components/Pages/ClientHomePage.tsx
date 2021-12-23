@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import UserInfo from './Views/UserInfoView';
 import { Button } from '@material-ui/core';
 import { Link, useNavigate } from 'react-router-dom';
+import { appTheme } from '../App';
 
 export interface UserInformation {
     firstName: string,
@@ -36,24 +37,35 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
     render() {
         return (
             <div style={{
-                maxWidth: "500px"
+                maxWidth: "500px",
+                
             }}>
+                <div
+                    style={{
+                        backgroundColor:appTheme.secondaryColor
+                    }}
+                >
                 <Button style={{
                     float: "right",
                     margin: "30px",
-                    marginLeft: "0"
+                    marginLeft: "0",
+                    backgroundColor:appTheme.secondaryAccentColor,
                     }} 
                     variant="contained"
                     color="primary" 
                     onClick={this.props.signOut}>
                     Sign out
                     </Button>              
-                <UserInfo user={this.state as UserInformation} handleChange={this.handleChange} />                
+                <UserInfo user={this.state as UserInformation} handleChange={this.handleChange} />                         
+
+                </div>
+           
                 <Button style={{
                         display: "flex",
-                        marginTop:"10px"
+                        marginTop:"10px",
+                        backgroundColor:appTheme.primaryAccentColor,
+                        boxShadow:"2px 2px"
                     }} 
-                    color="primary" 
                     variant="contained" 
                     component={Link} 
                     to='/filing'>
