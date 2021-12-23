@@ -1,7 +1,8 @@
 import { Button, TextField } from '@material-ui/core'
-import { MuiThemeProvider } from 'material-ui/styles'
 import React, { Component } from 'react'
 import { appTheme } from '../../App'
+import SaveIcon from '@material-ui/icons/Save'
+import EditIcon from '@material-ui/icons/Edit'
 
 export interface TaxInformation {
     primaryIncomeAmount: string,
@@ -493,7 +494,8 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
 
                         color="primary" 
                         variant="contained" 
-                        onClick={this.switchEditMode}>
+                        onClick={this.switchEditMode}
+                        startIcon={isEditMode?<SaveIcon/>: <EditIcon/>}>
                         {isEditMode?"Save": "Edit"}
                 </Button>
 

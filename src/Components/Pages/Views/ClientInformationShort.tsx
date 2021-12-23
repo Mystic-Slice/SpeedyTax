@@ -5,40 +5,30 @@ import { ClientInformation } from '../ConsultantHomePage'
 export class ClientInformationShort extends Component<{ client: ClientInformation, setClient: (client: ClientInformation) => () => void }> {
     render() {
         const { client, setClient } = this.props;
-        const { name, email, panId, meetingDate, meetingTime } = client
+        const { name, email } = client
         return (
-            <Card>
+            <Card style={{
+                width: "100%"
+            }}>
                 <ButtonBase onClick={setClient(client)}>
                     <TextField
                         value={name}
                         label="Client Name"
                         InputProps={{
                             readOnly: true
-                        }} fullWidth/>
+                        }} 
+                        style={{
+                            width: "50%"
+                        }}/>
                     <TextField
                         value={email}
                         label="Email Id"
                         InputProps={{
                             readOnly: true
-                        }} fullWidth/>
-                    <TextField
-                        value={panId}
-                        label="Pan Id"
-                        InputProps={{
-                            readOnly: true
-                        }} fullWidth/>
-                    <TextField
-                        value={meetingDate}
-                        label="Meeting Date"
-                        InputProps={{
-                            readOnly: true
-                        }} fullWidth/>
-                    <TextField
-                        value={meetingTime}
-                        label="Meeting Time"
-                        InputProps={{
-                            readOnly: true
-                        }} fullWidth/>
+                        }} 
+                        style={{
+                            width: "50%"
+                        }}/>
                 </ButtonBase>
             </Card>
         )

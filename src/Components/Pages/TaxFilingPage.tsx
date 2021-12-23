@@ -5,6 +5,7 @@ import ConsultantDetails from './Views/ConsultantDetails'
 import RefundStatus from './Views/RefundStatus'
 import { TaxInformation, TaxInfoView } from './Views/TaxInfoView'
 import { appTheme } from '../App'
+import HomeIcon from '@mui/icons-material/Home'
 
 export class TaxFilingPage extends Component {
     state = {
@@ -182,7 +183,7 @@ export class TaxFilingPage extends Component {
                             backgroundColor:appTheme.primaryAccentColor,
                             marginTop:"20px"
                         }}
-                        variant="contained" onClick={this.nextStep}>Next</Button>
+                        variant="contained" onClick={this.nextStep} disabled>Next</Button>
                         </div>   
                     </div>
                 )

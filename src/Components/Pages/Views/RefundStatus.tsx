@@ -39,7 +39,8 @@ export class RefundStatus extends Component {
                             height: "70%",
                             backgroundColor: status ? "green": "red",
                             margin: "auto",
-                            textAlign:"center"
+                            textAlign:"center",
+                            fontSize: "30px"
                         }}>
                         {status?"Successful": "Pending"}
                         </Card>

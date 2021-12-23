@@ -24,8 +24,6 @@ export const appTheme = {
 export function App() {
     const [user, setUser] = React.useState(null as User);
 
-    // const navigate = useNavigate();
-
     const signOut = () => {
         setUser(null as User);
     }
@@ -35,7 +33,6 @@ export function App() {
     }
 
     if(user.type == "client") {
-        // navigate('/clientHome');
         return (
             <HashRouter>
                 <Routes>
@@ -47,7 +44,6 @@ export function App() {
     }
 
     if(user.type == "consultant") {
-        // navigate('/consultantHome')
         return (
             <HashRouter>
                 <Routes>

@@ -78,7 +78,7 @@ export class Login extends Component<{ setUser: any }> {
                         }}>
                         Sign-up
                     </Button>
-                </ButtonGroup><br/>
+                </ButtonGroup><br/><br/>
                 { this.getView(method) }
             </div>
         )

@@ -1,8 +1,9 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import UserInfo from './Views/UserInfoView';
 import { Button } from '@material-ui/core';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { appTheme } from '../App';
+import SignOutIcon from '@mui/icons-material/Logout';
 
 export interface UserInformation {
     firstName: string,
@@ -27,12 +28,7 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
 
     handleChange = (input: any) => (event: any) => {
         this.setState({ [input]: event.target.value });
-    }
-
-    handleNavigation = (target: string) => () => {
-        const navigate = useNavigate();
-        navigate(target);
-    }    
+    } 
 
     render() {
         return (
@@ -53,7 +49,8 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
                     }} 
                     variant="contained"
                     color="primary" 
-                    onClick={this.props.signOut}>
+                    onClick={this.props.signOut}
+                    startIcon={<SignOutIcon/>} >
                     Sign out
                     </Button>              
                 <UserInfo user={this.state as UserInformation} handleChange={this.handleChange} />                         
