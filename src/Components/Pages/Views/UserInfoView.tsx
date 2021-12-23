@@ -235,7 +235,7 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                             style={{
                                 backgroundColor:appTheme.secondaryAccentColor
                             }}
-                        color="primary" variant="contained" 
+                            color="primary" variant="contained" 
                             onClick={this.switchEditMode} 
                             startIcon={this.state.isEditMode?<SaveIcon/>: <EditIcon/>} >
                             {this.state.isEditMode?"Save": "Edit"}
