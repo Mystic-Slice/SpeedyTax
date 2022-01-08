@@ -1,9 +1,10 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
-import { initDB } from './Database/db';
+import { initDbConnection, severDbConnection } from './Database/dbHelper';
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 if (require('electron-squirrel-startup')) {
+	severDbConnection();
 	app.quit();
 }
 
@@ -18,12 +19,13 @@ const createWindow = (): void => {
 		}
 	});
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-	// initDB();
+	initDbConnection();
 };
 
 app.on('ready', createWindow);
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
+		severDbConnection();
 		app.quit();
 	}
 });

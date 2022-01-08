@@ -1,0 +1,35 @@
+Database:
+X	1. Creation of tables
+	2. Insertion of dummy data
+	
+General:
+	1. Store login details inside the settings
+
+Login:
+	Sign-in:
+		1. Verify email and password
+
+	Sign-up:
+		1. Check if email already exists or else create new record
+
+General Details:
+	1. Fetch details from database 
+	2. Update database when edited
+	3. Remove Aadhar number
+
+Tax Filing:
+	1. Add additional steps (Income Primary and Secondary, Deductions, Total tax paid)
+	2. Tax calculation
+	
+Refund status:
+	1. Redesign details visible
+	
+Client side view:
+	1. Show the status of each consultation
+	2. Client view (Add all info, display files)
+	3. Option to approve client to next step
+
+Stretch:
+	1. Progress indicator (4 steps)
+	2. Add ability to choose time slots for client
+	3. File handling
