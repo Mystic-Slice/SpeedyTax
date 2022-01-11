@@ -20,84 +20,8 @@ const userInfoStyle = {
 }
 
 export class UserInfoView extends Component<{ user: UserInformation, handleChange: (input: any) => any, style: React.CSSProperties } | any> {
-    state = {
-        isEditMode: false,
-        errorFirstName: false,
-        errorLastName: false,
-        errorEmail: false,
-        errorPhoneNumber: false,
-        errorPanId: false,
-        errorDob: false
-    }
-
-    switchEditMode = () => {
-        const { isEditMode } = this.state
-        if(isEditMode) {
-            const { firstName, lastName, email, phoneNumber, panId, dob } = this.props.user
-            if(!this.validate(firstName, lastName, email, phoneNumber, panId, dob)) return false
-        }
-        this.setState({isEditMode: isEditMode ? false : true});
-    }
-
-    validate = (
-        firstName: string, 
-        lastName: string,
-        email: string, 
-        phoneNumber: string, 
-        panId: string,
-        dob: string ) => {
-            let error = false
-
-            let errorFirstName = false
-            if(!firstName.match(regex.firstName)) {
-                errorFirstName = true
-                error = true
-            }
-
-            let errorLastName = false
-            if(!lastName.match(regex.lastName)) {
-                errorLastName = true
-                error = true
-            }
-
-            let errorEmail = false            
-            if(!email.match(regex.email)) {
-                errorEmail = true
-                error = true
-            }
-
-            let errorPhoneNumber = false
-            if(!phoneNumber.match(regex.phoneNumber)) {
-                errorPhoneNumber = true
-                error = true
-            }
-
-            let errorPanId = false
-            if(!panId.match(regex.panId)) {
-                errorPanId = true
-                error = true
-            }
-
-            let errorDob = false
-            if(dob == "") {
-                errorDob = true
-                error = true
-            }
-
-            this.setState({
-                errorFirstName: errorFirstName,
-                errorLastName: errorLastName,
-                errorEmail: errorEmail,
-                errorPhoneNumber: errorPhoneNumber,
-                errorPanId: errorPanId,
-                errorDob: errorDob
-            })
-            return !error
-        }
-
     render() {
         const { user, handleChange } = this.props;
-        const { errorFirstName, errorLastName, errorEmail, errorPhoneNumber, errorPanId, errorDob } = this.state
         return (
             <div style={userInfoStyle}>
                 <h1 style={{
@@ -112,12 +36,10 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     value={user.firstName}
                     placeholder="Enter your First Name"
                     label="First Name"
-                    error={errorFirstName}
-                    helperText={errorFirstName ? "Invalid First Name": ""}
                     margin="normal"
                     onChange={handleChange("firstName")}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     fullWidth
                 />
@@ -125,13 +47,11 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                 <TextField
                     value={user.lastName}
                     placeholder="Enter your Last Name"
-                    label="Last Name"                    
-                    error={errorLastName}
-                    helperText={errorLastName ? "Invalid Last Name": ""}
+                    label="Last Name"
                     margin="normal"
                     onChange={handleChange("lastName")}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     fullWidth
                 />
@@ -140,12 +60,10 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     value={user.email}
                     placeholder="Enter your Email"
                     label="Email"
-                    error={errorEmail}
-                    helperText={errorEmail ? "Invalid Email": ""}
                     margin="normal"
                     onChange={handleChange("email")}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     fullWidth
                 />
@@ -154,12 +72,10 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     value={user.phoneNumber}
                     placeholder="Enter your Phone Number"
                     label="Phone Number"
-                    error={errorPhoneNumber}
-                    helperText={errorPhoneNumber ? "Invalid Phone Number": ""}
                     margin="normal"
                     onChange={handleChange("phoneNumber")}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     fullWidth
                 />
@@ -168,12 +84,10 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     value={user.panId}
                     placeholder="Enter your Pan Id"
                     label="Pan Id"
-                    error={errorPanId}
-                    helperText={errorPanId ? "Invalid Pan Id": ""}
                     margin="normal"
                     onChange={handleChange("panId")}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     fullWidth
                 />
@@ -182,8 +96,6 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     value={user.dob}
                     placeholder="Enter your Date of Birth"
                     label="Date of Birth"
-                    error={errorDob}
-                    helperText={errorDob ? "Invalid Date": ""}
                     margin="normal"
                     type={"date"}
                     onChange={handleChange("dob")}
@@ -191,32 +103,14 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                         shrink: true
                     }}
                     InputProps={{
-                        readOnly: !this.state.isEditMode
+                        readOnly: true
                     }}
                     inputProps={{
                         min: '1940-01-01',
                         max: '2015-01-01'
                     }}
-                    style={{
-                        width: "50%"
-                    }}
+                    fullWidth
                 />
-
-                <div style={{
-                        display: "inline",
-                        float: "right",
-                        marginTop: "30px"
-                    }}>
-                        <Button 
-                            style={{
-                                backgroundColor:appTheme.secondaryAccentColor
-                            }}
-                            color="primary" variant="contained" 
-                            onClick={this.switchEditMode} 
-                            startIcon={this.state.isEditMode?<SaveIcon/>: <EditIcon/>} >
-                            {this.state.isEditMode?"Save": "Edit"}
-                        </Button>
-                    </div>
 
             </div>
         )
