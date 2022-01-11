@@ -7,7 +7,8 @@ export const tables = [
         Password varchar(20) not null, 
         Phone_Number char(10) not null unique, 
         DOB date not null, 
-        primary key (Pan_ID));`,
+        primary key (Pan_ID)
+    );`,
 
     `Tax_Consultant (
         Employee_ID char(10) not null, 

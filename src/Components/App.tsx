@@ -6,13 +6,7 @@ import { ClientHomePage } from './Pages/ClientHomePage';
 import { ConsultantHomePage } from './Pages/ConsultantHomePage';
 import { Login } from './Pages/Login';
 import { TaxFilingPage } from './Pages/TaxFilingPage';
-
-export interface User {
-    userName: string,
-    password: string,
-    type: "client" | "consultant"
-}
-
+import { User } from '../types';
 
 export const appTheme = {
     primaryColor:"#3fc1c9",

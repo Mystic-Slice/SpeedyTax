@@ -1,5 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { initDbConnection, severDbConnection } from './Database/dbHelper';
+import { User } from './types';
+import { validateUser } from './Database/dbContentProvider';
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
@@ -8,6 +10,8 @@ if (require('electron-squirrel-startup')) {
 	app.quit();
 }
 
+ipcMain.on('validate-user', (event, user: User) => validateUser(event, user))
+
 const createWindow = (): void => {
 	const mainWindow = new BrowserWindow({
 		height: 800,
@@ -15,7 +19,8 @@ const createWindow = (): void => {
 		minHeight: 800,
 		minWidth: 800,
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			contextIsolation: false,
 		}
 	});
 	mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
