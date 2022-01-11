@@ -13,13 +13,13 @@ X Login:
 		X	1. Check if email already exists or else create new record
 
 General Details:
-	1. Fetch details from database 
-	2. Update database when edited
-	3. Remove Aadhar number
+	X 1. Fetch details from database
+	X 2. Remove Aadhar number
 
 Tax Filing:
-	1. Add additional steps (Income Primary and Secondary, Deductions, Total tax paid)
-	2. Tax calculation
+	X 1. Fetch Data
+	2. Allow Edit
+	3. Tax calculation
 	
 Refund status:
 	1. Redesign details visible

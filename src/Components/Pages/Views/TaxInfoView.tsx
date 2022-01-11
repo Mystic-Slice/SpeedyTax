@@ -3,29 +3,15 @@ import React, { Component } from 'react'
 import { appTheme } from '../../App'
 import SaveIcon from '@material-ui/icons/Save'
 import EditIcon from '@material-ui/icons/Edit'
-
-export interface TaxInformation {
-    primaryIncomeAmount: string,
-    primaryIncomeCompany: string,
-    primaryIncomeDocument: string,
-    rentAmount: string,
-    rentDoorNo: string,
-    rentStreetName: string,
-    rentDocument: string,
-    pfAmount: string,
-    pfInterest: string,
-    pfBankName: string,
-    pfDocument: string,
-    houseLoanAmount: string,
-    houseLoanInterest: string,
-    houseLoanBankName: string,
-    houseLoanDocument: string,
-    donationAmount: string,
-    donationTrustName: string,
-    donationDocument: string
-}
+import { TaxInformation } from '../../../types'
 
 export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, handleChange: (input:any) => any }> {
+
+    constructor(props: { clientTaxInfo: TaxInformation; handleChange: (input: any) => any } | Readonly<{ clientTaxInfo: TaxInformation; handleChange: (input: any) => any }>) {
+        super(props);
+        this.switchEditMode();
+    }
+
     state = {
         isEditMode: false,
         errorPrimaryIncomeAmount: false,
@@ -56,40 +42,28 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                 pfAmount, pfInterest, pfBankName, pfDocument,
                 houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument,
                 donationAmount, donationTrustName, donationDocument } = this.props.clientTaxInfo;
-                if(!this.validate(primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
-                    rentAmount, rentDoorNo, rentStreetName, rentDocument,
-                    pfAmount, pfInterest, pfBankName, pfDocument,
-                    houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument,
-                    donationAmount, donationTrustName, donationDocument)) return false
+
+                let valid = true;
+
+                if(!this.validatePrimaryIncome(primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument)) valid = false;
+                if(!this.validateRent(rentAmount, rentDoorNo, rentStreetName, rentDocument)) valid = false;
+                if(!this.validatePf(pfAmount, pfInterest, pfBankName, pfDocument)) valid = false;
+                if(!this.validateHouseLoan(houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument)) valid = false;
+                if(!this.validateDonation(donationAmount, donationTrustName, donationDocument)) valid = false;
+
+                if(!valid) return false;
         }
         this.setState({isEditMode: isEditMode ? false : true});
     }
 
-    validate = (
+    validatePrimaryIncome = (
         primaryIncomeAmount: string,
         primaryIncomeCompany: string,
-        primaryIncomeDocument: string,
-        rentAmount: string,
-        rentDoorNo: string,
-        rentStreetName: string,
-        rentDocument: string,
-        pfAmount: string,
-        pfInterest: string,
-        pfBankName: string,
-        pfDocument: string,
-        houseLoanAmount: string,
-        houseLoanInterest: string,
-        houseLoanBankName: string,
-        houseLoanDocument: string,
-        donationAmount: string,
-        donationTrustName: string,
-        donationDocument: string
-    ) => {
+        primaryIncomeDocument: string) => {
+            
         let error = false
 
         let regexPos = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/
-        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?%$/
-
         let errorPrimaryIncomeAmount = false
         if(!primaryIncomeAmount.match(regexPos)) {
             errorPrimaryIncomeAmount = true
@@ -108,6 +82,33 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             error = true
         }
 
+        this.setState({
+            errorPrimaryIncomeAmount: errorPrimaryIncomeAmount,
+            errorPrimaryIncomeCompany: errorPrimaryIncomeCompany,
+            errorPrimaryIncomeDocument: errorPrimaryIncomeDocument
+        });
+        return !error
+    }
+
+    validateRent = (
+        rentAmount: string,
+        rentDoorNo: string,
+        rentStreetName: string,
+        rentDocument: string) => {
+
+        if(rentAmount == "" && rentDoorNo == "" && rentStreetName == "" /* && rentDocument == "" */) {
+            this.setState({
+                errorRentAmount: false,
+                errorRentDoorNo: false,
+                errorRentStreetName: false,
+                errorRentDocument: false
+            })
+            return true;
+        }
+        
+        let error = false
+
+        let regexPos = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/
         let errorRentAmount = false
         if(!rentAmount.match(regexPos)) {
             errorRentAmount = true
@@ -131,14 +132,43 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             errorRentDocument = true
             error = true
         }
-        
+
+        this.setState({
+            errorRentAmount: errorRentAmount,
+            errorRentDoorNo: errorRentDoorNo,
+            errorRentStreetName: errorRentStreetName,
+            errorRentDocument: errorRentDocument
+        });
+        return !error
+    }
+
+    validatePf = (
+        pfAmount: string,
+        pfInterest: string,
+        pfBankName: string,
+        pfDocument: string) => {
+
+        if(pfAmount == "" && pfInterest == "" && pfBankName == "" /* && pfDocument == "" */) {
+            this.setState({
+                errorPfAmount: false,
+                errorPfInterest: false,
+                errorPfBankName: false,
+                errorPfDocument: false            
+            })
+            return true;
+        }
+
+        let error = false
+
         let errorPfAmount = false
+        let regexPos = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/
         if(!pfAmount.match(regexPos)) {
             errorPfAmount = true
             error = true
         }
 
         let errorPfInterest = false
+        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?%$/
         if(!pfInterest.match(regexPercentage)) {
             errorPfInterest = true
             error = true
@@ -155,7 +185,36 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             errorPfDocument = true
             error = true
         }
-        
+
+        this.setState({
+            errorPfAmount: errorPfAmount,
+            errorPfInterest: errorPfInterest,
+            errorPfBankName: errorPfBankName,
+            errorPfDocument: errorPfDocument            
+        })
+
+        return !error
+    }
+
+    validateHouseLoan = (
+        houseLoanAmount: string,
+        houseLoanInterest: string,
+        houseLoanBankName: string,
+        houseLoanDocument: string) => {
+
+        if(houseLoanAmount == "" && houseLoanInterest == "" && houseLoanBankName == "" /* && houseLoanDocument == "" */) {
+            this.setState({
+                errorHouseLoanAmount: false,
+                errorHouseLoanInterest: false,
+                errorHouseLoanBankName: false,
+                errorHouseLoanDocument: false,
+            })
+            return true;
+        }
+
+        let error = false
+
+        let regexPos = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/
         let errorHouseLoanAmount = false
         if(!houseLoanAmount.match(regexPos)) {
             errorHouseLoanAmount = true
@@ -163,6 +222,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
         }
         
         let errorHouseLoanInterest = false
+        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?%$/
         if(!houseLoanInterest.match(regexPercentage)) {
             errorHouseLoanInterest = true
             error = true
@@ -178,8 +238,35 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
             errorHouseLoanDocument = true
             error = true
         }
-        
+
+        this.setState({
+            errorHouseLoanAmount: errorHouseLoanAmount,
+            errorHouseLoanInterest: errorHouseLoanInterest,
+            errorHouseLoanBankName: errorHouseLoanBankName,
+            errorHouseLoanDocument: errorHouseLoanDocument,
+        })
+
+        return !error;
+    }
+
+    validateDonation = (
+        donationAmount: string,
+        donationTrustName: string,
+        donationDocument: string) => {
+
+        if(donationAmount == "" && donationTrustName == "" /* && donationDocument == "" */) {
+            this.setState({
+                errorDonationAmount: false,
+                errorDonationTrustName: false,
+                errorDonationDocument: false
+            })
+            return true;
+        }
+
+        let error = false
+
         let errorDonationAmount = false
+        let regexPos = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/        
         if(!donationAmount.match(regexPos)) {
             errorDonationAmount = true
             error = true
@@ -198,25 +285,11 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
         }
 
         this.setState({
-            errorPrimaryIncomeAmount: errorPrimaryIncomeAmount,
-            errorPrimaryIncomeCompany: errorPrimaryIncomeCompany,
-            errorPrimaryIncomeDocument: errorPrimaryIncomeDocument,
-            errorRentAmount: errorRentAmount,
-            errorRentDoorNo: errorRentDoorNo,
-            errorRentStreetName: errorRentStreetName,
-            errorRentDocument: errorRentDocument,
-            errorPfAmount: errorPfAmount,
-            errorPfInterest: errorPfInterest,
-            errorPfBankName: errorPfBankName,
-            errorPfDocument: errorPfDocument,
-            errorHouseLoanAmount: errorHouseLoanAmount,
-            errorHouseLoanInterest: errorHouseLoanInterest,
-            errorHouseLoanBankName: errorHouseLoanBankName,
-            errorHouseLoanDocument: errorHouseLoanDocument,
             errorDonationAmount: errorDonationAmount,
             errorDonationTrustName: errorDonationTrustName,
             errorDonationDocument: errorDonationDocument
         })
+
         return !error
     }
 

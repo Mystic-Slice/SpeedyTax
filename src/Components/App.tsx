@@ -31,7 +31,7 @@ export function App() {
             <HashRouter>
                 <Routes>
                     <Route path = '/' element={<ClientHomePage signOut={signOut} user={user} />}></Route>
-                    <Route path = '/filing' element={<TaxFilingPage/>}></Route>
+                    <Route path = '/filing' element={<TaxFilingPage user={user} />}></Route>
                 </Routes>
             </HashRouter>
         )

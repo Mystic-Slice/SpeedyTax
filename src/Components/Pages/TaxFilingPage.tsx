@@ -3,31 +3,120 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ConsultantDetails from './Views/ConsultantDetails'
 import RefundStatus from './Views/RefundStatus'
-import { TaxInformation, TaxInfoView } from './Views/TaxInfoView'
+import { TaxInfoView } from './Views/TaxInfoView'
 import { appTheme } from '../App'
 import HomeIcon from '@mui/icons-material/Home'
+import { TaxInformation } from '../../types'
+import { User } from '../../types'
+const { ipcRenderer } = window.require("electron");
 
-export class TaxFilingPage extends Component {
+export class TaxFilingPage extends Component<{ user: User}> {
+
+    constructor(props: { user: User } | Readonly<{ user: User }>) {
+        super(props)
+        ipcRenderer.send('get-user-tax-details', this.props.user);
+        ipcRenderer.once('get-user-income-reply', (event, result) => this.setIncome(result))
+        ipcRenderer.once('get-user-rent-reply', (event, result) => this.setRent(result))
+        ipcRenderer.once('get-user-pf-reply', (event, result) => this.setPf(result))
+        ipcRenderer.once('get-user-house-reply', (event, result) => this.setHouseLoan(result))
+        ipcRenderer.once('get-user-donation-reply', (event, result) => this.setDonation(result))
+    }
+
     state = {
         step: initStep(),
-        primaryIncomeAmount: "150000",
-        primaryIncomeCompany: "Google India",
-        primaryIncomeDocument: "google_income.pdf",
-        rentAmount: "12000",
-        rentDoorNo: "54",
-        rentStreetName: "D B Road",
-        rentDocument: "rental_agreement.pdf",
-        pfAmount: "400000",
-        pfInterest: "7%",
-        pfBankName: "SBI",
-        pfDocument: "pf_statement.pdf",
-        houseLoanAmount: "1600000",
-        houseLoanInterest: "6%",
-        houseLoanBankName: "SBI",
-        houseLoanDocument: "house_loan.pdf",
-        donationAmount: "200000",
-        donationTrustName: "Udhavum Karangal",
-        donationDocument: "donation_receipt.pdf"
+        primaryIncomeAmount: "",
+        primaryIncomeCompany: "",
+        primaryIncomeDocument: "",
+        rentAmount: "",
+        rentDoorNo: "",
+        rentStreetName: "",
+        rentDocument: "",
+        pfAmount: "",
+        pfInterest: "",
+        pfBankName: "",
+        pfDocument: "",
+        houseLoanAmount: "",
+        houseLoanInterest: "",
+        houseLoanBankName: "",
+        houseLoanDocument: "",
+        donationAmount: "",
+        donationTrustName: "",
+        donationDocument: ""
+    }
+
+    setIncome = (result: any) => {
+        console.log("setting income")
+        this.setState({
+            primaryIncomeAmount: result.Amount,
+            primaryIncomeCompany: result.Company,
+            primaryIncomeDocument: result.File_Location
+        })
+    }
+
+    setRent = (result: any) => {
+        if(result === []) {
+            result = {
+                Amount: "",
+                Door_or_Plot_No: "",
+                City: "",
+                File_Location: "rental_agreement.pdf"
+            }
+        }
+        this.setState({
+            rentAmount: result.Amount,
+            rentDoorNo: result.Door_or_Plot_No,
+            rentStreetName: result.City,
+            rentDocument: result.File_Location,
+        })
+    }
+
+    setPf = (result: any) => {
+        if(result === []) {
+            result = {
+                Amount: "",
+                Intrest_rate: "",
+                Bank_Name: "",
+                File_Location: "pf_statement.pdf"
+            }
+        }
+        this.setState({
+            pfAmount: result.Amount,
+            pfInterest: result.Intrest_rate,
+            pfBankName: result.Bank_Name,
+            pfDocument: result.File_Location
+        })
+    }
+
+    setHouseLoan = (result: any) => {
+        if(result === []) {
+            result = {
+                Amount: "",
+                Intrest_rate: "",
+                Bank_Name: "",
+                File_Location: "house_loan.pdf"
+            }
+        }
+        this.setState({            
+            houseLoanAmount: result.Amount,
+            houseLoanInterest: result.Intrest_rate,
+            houseLoanBankName: result.Bank_Name,
+            houseLoanDocument: result.File_Location
+        })
+    }
+
+    setDonation = (result: any) => {
+        if(result === []) {
+            result = {
+                Amount: "",
+                Trust_Name: "",
+                File_Location: "donation_receipt.pdf"
+            }
+        }
+        this.setState({
+            donationAmount: result.Amount,
+            donationTrustName: result.Trust_Name,
+            donationDocument: result.File_Location
+        })
     }
 
     handleChange = (input: any) => (event: any) => {
