@@ -79,3 +79,95 @@ export function getUserDetails(event: Electron.IpcMainEvent, user: User) {
         event.reply('get-user-details-reply', userInfo)
     })
 }
+
+export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
+    let date: Date = new Date();
+    let year = date.getFullYear()-1;
+    let pastYear = year-1
+    let yearString = pastYear.toString() + '-' + year.toString().substring(2)
+    console.log(yearString)
+    // Primary Income
+    let query = `SELECT * FROM Income WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = []
+        }
+        console.log(result)
+        event.reply('get-user-income-reply', result)
+    })
+
+    // Rent
+    query = `SELECT * FROM Rent WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = []
+        }
+        console.log(result)
+        event.reply('get-user-rent-reply', result)
+    })
+
+    // Pf
+    query = `SELECT * FROM PF WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = []
+        }
+        console.log(result)
+        event.reply('get-user-pf-reply', result)
+    })
+
+    // House Loan
+    query = `SELECT * FROM House_Loan WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = []
+        }
+        console.log(result)
+        event.reply('get-user-house-reply', result)
+    })
+
+    // Donation
+    query = `SELECT * FROM Donation WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = []
+        }
+        console.log(result)
+        event.reply('get-user-donation-reply', result)
+    })
+}
