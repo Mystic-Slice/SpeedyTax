@@ -1,7 +1,8 @@
 import { Button, Grid, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
-import { User } from '../../App'
+import { User } from '../../../types'
 import { appTheme } from '../../App'
+const { ipcRenderer } = window.require("electron");
 
 const regex = {
     userName: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -9,6 +10,10 @@ const regex = {
 }
 
 export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
+
+    constructor(props: { handleSubmit: (user: User) => void; } | Readonly<{ handleSubmit: (user: User) => void; }>) {
+        super(props);
+    }
 
     state = {
         userName: "vaashwath@gmail.com",
@@ -46,7 +51,6 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
 
     handleSigninSubmit = (event: FormEvent) => {
         event.preventDefault();
-        const { handleSubmit } = this.props;
         const { userName, password, type } = this.state;
         if(!this.validate(userName, password)) return
         const user: User = {
@@ -54,7 +58,20 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
             password: password,
             type: type as "client" | "consultant"
         }
-        handleSubmit(user);
+        this.signIn(user);
+    }
+
+    signIn = (user: User) => {
+        const { handleSubmit } = this.props;
+        ipcRenderer.send('validate-user', user);
+        
+        ipcRenderer.once('validate-user-reply', (event, result) => {
+            if(result) {
+                handleSubmit(user);
+            }else{
+                alert('Username and Password do not match')
+            }
+        })
     }
 
     render() {
@@ -73,7 +90,6 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
                     <TextField 
                         value={password} 
                         label="Password"
-                        type={"password"}
                         error={errorPassword}
                         helperText={errorPassword ? "Invalid password": ""}
                         onChange={this.handleChange("password")}

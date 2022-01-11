@@ -2,7 +2,7 @@ import { Button, ButtonGroup } from '@material-ui/core';
 import React, { Component } from 'react'
 import Signin from './Views/Signin';
 import Signup from './Views/Signup';
-import { User } from '../App';
+import { User } from '../../types';
 import { appTheme } from '../App';
 
 const LoginStyle = {

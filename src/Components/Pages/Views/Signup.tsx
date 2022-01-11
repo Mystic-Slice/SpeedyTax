@@ -1,6 +1,6 @@
 import { Button, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
-import { User } from '../../App'
+import { User } from '../../../types'
 import { appTheme } from '../../App'
 
 const regex = {
