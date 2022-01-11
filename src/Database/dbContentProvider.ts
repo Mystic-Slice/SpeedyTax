@@ -57,3 +57,25 @@ export function createUser(event: Electron.IpcMainEvent, userInfo: UserInformati
         }
     })
 }
+
+export function getUserDetails(event: Electron.IpcMainEvent, user: User) {
+    let query = `SELECT * FROM Client WHERE Email_ID='${user.userName}' AND Password='${user.password}'`
+    console.log(query)
+
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        result = result[0]
+        let userInfo: UserInformation = {
+            panId: result.Pan_ID,
+            firstName: result.First_Name,
+            lastName: result.Last_Name,
+            email: result.Email_ID,
+            phoneNumber: result.Phone_Number,
+            dob: result.DOB
+        }
+        event.reply('get-user-details-reply', userInfo)
+    })
+}

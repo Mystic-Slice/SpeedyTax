@@ -3,10 +3,18 @@ import UserInfo from './Views/UserInfoView';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { appTheme } from '../App';
-import { UserInformation } from '../../types'
+import { User, UserInformation } from '../../types'
 import SignOutIcon from '@mui/icons-material/Logout';
+const { ipcRenderer } = window.require("electron");
 
-export class ClientHomePage extends Component<{ signOut: () => void }> {
+export class ClientHomePage extends Component<{ signOut: () => void, user: User }> {
+
+    constructor(props: { signOut: () => void; user: User; } | Readonly<{ signOut: () => void; user: User; }>) {
+        super(props)
+        ipcRenderer.send('get-user-details', this.props.user);
+        ipcRenderer.once('get-user-details-reply', (event, result) => this.setUserInfo(result))
+    }
+
     state = {
         firstName: "Ashwath",
         lastName: "V A",
@@ -14,6 +22,17 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
         phoneNumber: "7339099303",
         panId: "ASDFG1234A",
         dob: "2002-07-21"
+    }
+
+    setUserInfo = (userInfo: UserInformation) => {
+        this.setState({
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            email: userInfo.email,
+            phoneNumber: userInfo.phoneNumber,
+            panId: userInfo.panId,
+            dob: userInfo.dob
+        })
     }
 
     handleChange = (input: any) => (event: any) => {
