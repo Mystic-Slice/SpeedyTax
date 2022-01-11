@@ -2,6 +2,8 @@ import { Button, MenuItem, Select, TextField } from '@material-ui/core'
 import React, { Component, FormEvent } from 'react'
 import { User } from '../../../types'
 import { appTheme } from '../../App'
+import { UserInformation } from '../../../types'
+const { ipcRenderer } = window.require("electron");
 
 const regex = {
     userName: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -10,28 +12,25 @@ const regex = {
     firstName: /^[A-Za-z ]{1,29}$/,
     lastName: /^[A-Za-z ]{1,29}$/,
     phoneNumber: /^[0-9]{10}$/,
-    aadharNumber: /^[0-9]{12}$/
 }
 
 export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
 
     state = {
-        userName: "",
-        password: "",
-        panId: "",
-        firstName: "",
-        lastName: "",
-        phoneNumber: "",
-        dob: "",
-        aadharNumber: "",
+        userName: "kishore@gmail.com",
+        password: "Kishore@0001",
+        panId: "ZZZZX1234W",
+        firstName: "Kishore",
+        lastName: "V",
+        phoneNumber: "1234567890",
+        dob: "1998-01-01",
         errorUserName: false,
         errorPassword: false,
         errorPanId: false,
         errorFirstName: false,
         errorLastName: false,
         errorPhoneNumber: false,
-        errorDob: false,
-        errorAadharNumber: false
+        errorDob: false
     }
 
     handleChange = (input: any) => (event: any) => {
@@ -45,8 +44,7 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
         firstName: string, 
         lastName: string, 
         phoneNumber: string, 
-        dob: string, 
-        aadharNumber: string) => {
+        dob: string) => {
             let error = false
 
             let errorUserName = false            
@@ -91,12 +89,6 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                 error = true
             }
 
-            let errorAadharNumber = false
-            if(!aadharNumber.match(regex.aadharNumber)) {
-                errorAadharNumber = true
-                error = true
-            }
-
             this.setState({
                 errorUserName: errorUserName,
                 errorPassword: errorPassword,
@@ -104,29 +96,54 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                 errorFirstName: errorFirstName,
                 errorLastName: errorLastName,
                 errorPhoneNumber: errorPhoneNumber,
-                errorDob: errorDob,
-                errorAadharNumber: errorAadharNumber
+                errorDob: errorDob
             })
             return !error
         }
 
-    // TODO: Include the new user in the database
     handleSignUpSubmit = (event: FormEvent) => {
         event.preventDefault();
         const { handleSubmit } = this.props;
-        const { userName, password, panId, firstName, lastName, phoneNumber, dob, aadharNumber } = this.state;
-        if(!this.validate(userName, password, panId, firstName, lastName, phoneNumber, dob, aadharNumber)) return false
+        const { userName, password, panId, firstName, lastName, phoneNumber, dob } = this.state;
+        if(!this.validate(userName, password, panId, firstName, lastName, phoneNumber, dob)) return false
         const user: User = {
             userName: userName,
             password: password,
             type: "client" as "client" | "consultant"
         }
-        handleSubmit(user);
+        this.signUp(user);
+    }
+
+    signUp = (user: User) => {
+        ipcRenderer.send('check-email-exists', user)
+
+        ipcRenderer.once('check-email-exists-reply', (event, result) => {
+            const { handleSubmit } = this.props;
+            if(!result) {
+                this.createNewRecord();
+                handleSubmit(user);
+            }else{
+                alert('Email already exists')
+            }
+        })
+    }
+
+    createNewRecord = () => {
+        const { panId, firstName, lastName, userName, password, phoneNumber, dob  } = this.state;
+        let userInfo: UserInformation = {
+            panId: panId,
+            firstName: firstName,
+            lastName: lastName,
+            email: userName,
+            phoneNumber: phoneNumber,
+            dob: dob
+        }
+        ipcRenderer.send('create-user', userInfo, password);
     }
 
     render() {
-        const { userName, password, panId, firstName, lastName, phoneNumber, dob, aadharNumber } = this.state;
-        const { errorUserName, errorPassword, errorPanId, errorFirstName, errorLastName, errorPhoneNumber, errorDob, errorAadharNumber } = this.state
+        const { userName, password, panId, firstName, lastName, phoneNumber, dob } = this.state;
+        const { errorUserName, errorPassword, errorPanId, errorFirstName, errorLastName, errorPhoneNumber, errorDob } = this.state
         return (
             <div>
                 <form onSubmit={this.handleSignUpSubmit}>
@@ -203,14 +220,6 @@ export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
                             min: '1940-01-01',
                             max: '2015-01-01',
                         }}
-                        fullWidth/>
-
-                    <TextField 
-                        value={aadharNumber} 
-                        label="Aadhar Number"
-                        error={errorAadharNumber}
-                        helperText={errorAadharNumber ? "Invalid Aadhar number": ""}
-                        onChange={this.handleChange("aadharNumber")}
                         fullWidth/>
 
                         <div style={{

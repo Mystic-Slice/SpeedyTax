@@ -1,6 +1,6 @@
 import React, { Component, ComponentProps } from 'react'
 import { Button, TextField } from '@material-ui/core';
-import { UserInformation } from '../ClientHomePage';
+import { UserInformation } from '../../../types';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
 import {appTheme} from '../../App'
@@ -10,8 +10,7 @@ const regex = {
     lastName: /^[A-Za-z ]{1,29}$/,
     email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     phoneNumber: /^[0-9]{10}$/,
-    panId: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
-    aadharNumber: /^[0-9]{12}$/
+    panId: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/
 }
 
 const userInfoStyle = {
@@ -28,15 +27,14 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
         errorEmail: false,
         errorPhoneNumber: false,
         errorPanId: false,
-        errorAadharNumber: false,
         errorDob: false
     }
 
     switchEditMode = () => {
         const { isEditMode } = this.state
         if(isEditMode) {
-            const { firstName, lastName, email, phoneNumber, panId, aadharNumber, dob } = this.props.user
-            if(!this.validate(firstName, lastName, email, phoneNumber, panId, aadharNumber, dob)) return false
+            const { firstName, lastName, email, phoneNumber, panId, dob } = this.props.user
+            if(!this.validate(firstName, lastName, email, phoneNumber, panId, dob)) return false
         }
         this.setState({isEditMode: isEditMode ? false : true});
     }
@@ -46,8 +44,7 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
         lastName: string,
         email: string, 
         phoneNumber: string, 
-        panId: string, 
-        aadharNumber: string,
+        panId: string,
         dob: string ) => {
             let error = false
 
@@ -81,12 +78,6 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                 error = true
             }
 
-            let errorAadharNumber = false
-            if(!aadharNumber.match(regex.aadharNumber)) {
-                errorAadharNumber = true
-                error = true
-            }
-
             let errorDob = false
             if(dob == "") {
                 errorDob = true
@@ -99,7 +90,6 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                 errorEmail: errorEmail,
                 errorPhoneNumber: errorPhoneNumber,
                 errorPanId: errorPanId,
-                errorAadharNumber: errorAadharNumber,
                 errorDob: errorDob
             })
             return !error
@@ -107,7 +97,7 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
 
     render() {
         const { user, handleChange } = this.props;
-        const { errorFirstName, errorLastName, errorEmail, errorPhoneNumber, errorPanId, errorAadharNumber, errorDob } = this.state
+        const { errorFirstName, errorLastName, errorEmail, errorPhoneNumber, errorPanId, errorDob } = this.state
         return (
             <div style={userInfoStyle}>
                 <h1 style={{
@@ -182,20 +172,6 @@ export class UserInfoView extends Component<{ user: UserInformation, handleChang
                     helperText={errorPanId ? "Invalid Pan Id": ""}
                     margin="normal"
                     onChange={handleChange("panId")}
-                    InputProps={{
-                        readOnly: !this.state.isEditMode
-                    }}
-                    fullWidth
-                />
-
-                <TextField
-                    value={user.aadharNumber}
-                    placeholder="Enter your Aadhar Number"
-                    label="Aadhar Number"
-                    error={errorAadharNumber}
-                    helperText={errorAadharNumber ? "Invalid Aadhar Number": ""}
-                    margin="normal"
-                    onChange={handleChange("aadharNumber")}
                     InputProps={{
                         readOnly: !this.state.isEditMode
                     }}

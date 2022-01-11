@@ -62,10 +62,10 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
     }
 
     signIn = (user: User) => {
-        const { handleSubmit } = this.props;
         ipcRenderer.send('validate-user', user);
         
         ipcRenderer.once('validate-user-reply', (event, result) => {
+            const { handleSubmit } = this.props;
             if(result) {
                 handleSubmit(user);
             }else{

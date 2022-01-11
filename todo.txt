@@ -1,16 +1,16 @@
-Database:
-X	1. Creation of tables
-	2. Insertion of dummy data
-	
+XDatabase:
+	X	1. Creation of tables
+		2. Insertion of dummy data
+		
 General:
 	1. Store login details inside the settings
 
-Login:
-	Sign-in:
-		1. Verify email and password
+X Login:
+		Sign-in:
+		X	1. Verify email and password
 
-	Sign-up:
-		1. Check if email already exists or else create new record
+		Sign-up:
+		X	1. Check if email already exists or else create new record
 
 General Details:
 	1. Fetch details from database 
@@ -33,3 +33,4 @@ Stretch:
 	1. Progress indicator (4 steps)
 	2. Add ability to choose time slots for client
 	3. File handling
+	4. check if phone number is unique

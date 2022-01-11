@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { initDbConnection, severDbConnection } from './Database/dbHelper';
-import { User } from './types';
-import { validateUser } from './Database/dbContentProvider';
+import { User, UserInformation } from './types';
+import { validateUser, checkEmailExists, createUser } from './Database/dbContentProvider';
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
@@ -11,6 +11,8 @@ if (require('electron-squirrel-startup')) {
 }
 
 ipcMain.on('validate-user', (event, user: User) => validateUser(event, user))
+ipcMain.on('check-email-exists', (event, user: User) => checkEmailExists(event, user))
+ipcMain.on('create-user', (event, userInfo: UserInformation, password: string) => createUser(event, userInfo, password) )
 
 const createWindow = (): void => {
 	const mainWindow = new BrowserWindow({
