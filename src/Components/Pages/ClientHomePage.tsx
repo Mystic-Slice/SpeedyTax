@@ -3,17 +3,8 @@ import UserInfo from './Views/UserInfoView';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { appTheme } from '../App';
+import { UserInformation } from '../../types'
 import SignOutIcon from '@mui/icons-material/Logout';
-
-export interface UserInformation {
-    firstName: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string,
-    panId: string,
-    aadharNumber: string,
-    dob: string
-}
 
 export class ClientHomePage extends Component<{ signOut: () => void }> {
     state = {
@@ -22,7 +13,6 @@ export class ClientHomePage extends Component<{ signOut: () => void }> {
         email: "vaashwath@gmail.com",
         phoneNumber: "7339099303",
         panId: "ASDFG1234A",
-        aadharNumber: '111122223333',
         dob: "2002-07-21"
     }
 
