@@ -34,3 +34,4 @@ Stretch:
 	2. Add ability to choose time slots for client
 	3. File handling
 	4. check if phone number is unique
+	5. check if email exists in tax consultant table
