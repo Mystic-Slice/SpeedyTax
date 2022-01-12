@@ -3,14 +3,10 @@ import React, { Component } from 'react'
 import { appTheme } from '../../App'
 import SaveIcon from '@material-ui/icons/Save'
 import EditIcon from '@material-ui/icons/Edit'
-import { TaxInformation } from '../../../types'
+import { TaxInformation, User } from '../../../types'
+const { ipcRenderer } = window.require("electron");
 
-export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, handleChange: (input:any) => any }> {
-
-    constructor(props: { clientTaxInfo: TaxInformation; handleChange: (input: any) => any } | Readonly<{ clientTaxInfo: TaxInformation; handleChange: (input: any) => any }>) {
-        super(props);
-        this.switchEditMode();
-    }
+export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user: User, handleChange: (input:any) => any }> {
 
     state = {
         isEditMode: false,
@@ -36,6 +32,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
 
     switchEditMode = () => {
         const { isEditMode } = this.state;
+        console.log(this.props.clientTaxInfo)
         if(isEditMode) {
             const { primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
                 rentAmount, rentDoorNo, rentStreetName, rentDocument,
@@ -52,6 +49,9 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
                 if(!this.validateDonation(donationAmount, donationTrustName, donationDocument)) valid = false;
 
                 if(!valid) return false;
+        }
+        if(isEditMode) {
+            ipcRenderer.send('save-tax-info', this.props.clientTaxInfo, this.props.user)
         }
         this.setState({isEditMode: isEditMode ? false : true});
     }
@@ -168,7 +168,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
         }
 
         let errorPfInterest = false
-        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?%$/
+        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?$/
         if(!pfInterest.match(regexPercentage)) {
             errorPfInterest = true
             error = true
@@ -222,7 +222,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, hand
         }
         
         let errorHouseLoanInterest = false
-        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?%$/
+        let regexPercentage = /^\d{1,2}(?:\.\d{,2})?$/
         if(!houseLoanInterest.match(regexPercentage)) {
             errorHouseLoanInterest = true
             error = true
