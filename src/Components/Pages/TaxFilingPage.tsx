@@ -45,16 +45,22 @@ export class TaxFilingPage extends Component<{ user: User}> {
     }
 
     setIncome = (result: any) => {
-        console.log("setting income")
+        if(result === 0) {
+            result = {
+                Amount: "",
+                Company: "",
+                File_Location: "income_statement.pdf"
+            }
+        }
         this.setState({
-            primaryIncomeAmount: result.Amount,
-            primaryIncomeCompany: result.Company,
-            primaryIncomeDocument: result.File_Location
+            primaryIncomeAmount: String(result.Amount),
+            primaryIncomeCompany: String(result.Company),
+            primaryIncomeDocument: String(result.File_Location)
         })
     }
 
     setRent = (result: any) => {
-        if(result === []) {
+        if(result === 0) {
             result = {
                 Amount: "",
                 Door_or_Plot_No: "",
@@ -63,15 +69,15 @@ export class TaxFilingPage extends Component<{ user: User}> {
             }
         }
         this.setState({
-            rentAmount: result.Amount,
-            rentDoorNo: result.Door_or_Plot_No,
-            rentStreetName: result.City,
-            rentDocument: result.File_Location,
+            rentAmount: String(result.Amount),
+            rentDoorNo: String(result.Door_or_Plot_No),
+            rentStreetName: String(result.City),
+            rentDocument: String(result.File_Location),
         })
     }
 
     setPf = (result: any) => {
-        if(result === []) {
+        if(result === 0) {
             result = {
                 Amount: "",
                 Intrest_rate: "",
@@ -80,15 +86,15 @@ export class TaxFilingPage extends Component<{ user: User}> {
             }
         }
         this.setState({
-            pfAmount: result.Amount,
-            pfInterest: result.Intrest_rate,
-            pfBankName: result.Bank_Name,
-            pfDocument: result.File_Location
+            pfAmount: String(result.Amount),
+            pfInterest: String(result.Intrest_rate),
+            pfBankName: String(result.Bank_Name),
+            pfDocument: String(result.File_Location)
         })
     }
 
     setHouseLoan = (result: any) => {
-        if(result === []) {
+        if(result === 0) {
             result = {
                 Amount: "",
                 Intrest_rate: "",
@@ -97,15 +103,15 @@ export class TaxFilingPage extends Component<{ user: User}> {
             }
         }
         this.setState({            
-            houseLoanAmount: result.Amount,
-            houseLoanInterest: result.Intrest_rate,
-            houseLoanBankName: result.Bank_Name,
-            houseLoanDocument: result.File_Location
+            houseLoanAmount: String(result.Amount),
+            houseLoanInterest: String(result.Intrest_rate),
+            houseLoanBankName: String(result.Bank_Name),
+            houseLoanDocument: String(result.File_Location)
         })
     }
 
     setDonation = (result: any) => {
-        if(result === []) {
+        if(result === 0) {
             result = {
                 Amount: "",
                 Trust_Name: "",
@@ -113,9 +119,9 @@ export class TaxFilingPage extends Component<{ user: User}> {
             }
         }
         this.setState({
-            donationAmount: result.Amount,
-            donationTrustName: result.Trust_Name,
-            donationDocument: result.File_Location
+            donationAmount: String(result.Amount),
+            donationTrustName: String(result.Trust_Name),
+            donationDocument: String(result.File_Location)
         })
     }
 
@@ -131,6 +137,15 @@ export class TaxFilingPage extends Component<{ user: User}> {
     prevStep = () => {
         let { step } = this.state;
         this.setState({ step: step - 1});
+    }
+
+    goToConsultation = () => {
+        if(this.state.primaryIncomeAmount == "") {
+            alert("Fill primary income")
+        }else{
+            this.nextStep();
+            ipcRenderer.send('create-new-consultation', this.props.user)
+        }
     }
 
     render() {
@@ -183,7 +198,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         </div>
                         
                         <h1 style={{textAlign:"center", marginTop:"0px"}}>Tax Information</h1>                       
-                        <TaxInfoView clientTaxInfo={clientTaxInfo} handleChange={this.handleChange}/>  
+                        <TaxInfoView clientTaxInfo={clientTaxInfo} user={this.props.user} handleChange={this.handleChange}/>  
                         <div style={{
                         float:"left"
                         }}>
@@ -198,7 +213,9 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         <Button style={{
                             backgroundColor:appTheme.primaryAccentColor
                         }} 
-                        variant="contained" onClick={this.nextStep}>Next</Button>
+                        variant="contained" 
+                        onClick={this.goToConsultation}
+                        >Next</Button>
                         </div>          
                                            
                     </div>

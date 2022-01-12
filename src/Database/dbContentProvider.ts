@@ -1,7 +1,14 @@
-import * as sqlite3 from 'sqlite3';
-import { User, UserInformation } from '../types';
+import { TaxInformation, User, UserInformation } from '../types';
 import { db } from './dbHelper';
-import { ipcMain } from 'electron';
+
+function currFAYear() {
+    let date: Date = new Date();
+    let year = date.getFullYear()-1;
+    let pastYear = year-1
+    let yearString = pastYear.toString() + '-' + year.toString().substring(2)
+    console.log(yearString)
+    return yearString;
+}
 
 export function validateUser(event: Electron.IpcMainEvent,user: User) {
     let tableName;
@@ -81,11 +88,8 @@ export function getUserDetails(event: Electron.IpcMainEvent, user: User) {
 }
 
 export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
-    let date: Date = new Date();
-    let year = date.getFullYear()-1;
-    let pastYear = year-1
-    let yearString = pastYear.toString() + '-' + year.toString().substring(2)
-    console.log(yearString)
+    let yearString = currFAYear()
+
     // Primary Income
     let query = `SELECT * FROM Income WHERE Pan_id = (SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
     console.log(query)
@@ -97,7 +101,7 @@ export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
         if(result.length > 0) {
             result = result[0]
         }else{
-            result = []
+            result = 0
         }
         console.log(result)
         event.reply('get-user-income-reply', result)
@@ -114,7 +118,7 @@ export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
         if(result.length > 0) {
             result = result[0]
         }else{
-            result = []
+            result = 0
         }
         console.log(result)
         event.reply('get-user-rent-reply', result)
@@ -131,7 +135,7 @@ export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
         if(result.length > 0) {
             result = result[0]
         }else{
-            result = []
+            result = 0
         }
         console.log(result)
         event.reply('get-user-pf-reply', result)
@@ -148,7 +152,7 @@ export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
         if(result.length > 0) {
             result = result[0]
         }else{
-            result = []
+            result = 0
         }
         console.log(result)
         event.reply('get-user-house-reply', result)
@@ -165,9 +169,146 @@ export function getUserTaxInfo(event: Electron.IpcMainEvent, user: User) {
         if(result.length > 0) {
             result = result[0]
         }else{
-            result = []
+            result = 0
         }
         console.log(result)
         event.reply('get-user-donation-reply', result)
+    })
+}
+
+export function saveTaxInfo(event: Electron.IpcMainEvent, taxInfo: TaxInformation, user: User) {
+    let yearString = currFAYear()
+
+    // Income
+    let query = `INSERT OR REPLACE INTO Income VALUES (
+                (SELECT Pan_ID FROM Client WHERE Email_ID='${user.userName}'), 
+                '${yearString}',
+                ${taxInfo.primaryIncomeAmount},
+                '${taxInfo.primaryIncomeDocument}',
+                '${taxInfo.primaryIncomeCompany}'
+                );`
+    console.log(query);
+    db.run(query, [], (error) => {
+        if(error){
+            console.log(error)
+        }else{
+            console.log("Inserted new Income record")
+        }
+    })
+
+    if(taxInfo.rentAmount != "") {        
+        // Rent
+        query = `INSERT OR REPLACE INTO Rent VALUES (
+            (SELECT Pan_ID FROM Client WHERE Email_ID='${user.userName}'), 
+            '${yearString}',
+            ${taxInfo.rentDoorNo},
+            '${taxInfo.rentStreetName}',
+            ${taxInfo.rentAmount},
+            '${taxInfo.rentDocument}'
+            );`
+        console.log(query);
+        db.run(query, [], (error) => {
+            if(error){
+                console.log(error)
+            }else{
+                console.log("Inserted new Rent record")
+            }
+        })
+    }
+
+    if(taxInfo.pfAmount != "") {
+        // Pf
+        query = `INSERT OR REPLACE INTO PF VALUES (
+                (SELECT Pan_ID FROM Client WHERE Email_ID='${user.userName}'), 
+                '${yearString}',
+                '${taxInfo.pfBankName}',
+                ${taxInfo.pfAmount},
+                '${taxInfo.pfDocument}',
+                ${taxInfo.pfInterest}
+                );`
+        console.log(query);
+        db.run(query, [], (error) => {
+            if(error){
+                console.log(error)
+            }else{
+                console.log("Inserted new PF record")
+            }
+        })
+    }
+
+    if(taxInfo.houseLoanAmount != "") {
+        // House Loan
+        query = `INSERT OR REPLACE INTO House_Loan VALUES (
+                (SELECT Pan_ID FROM Client WHERE Email_ID='${user.userName}'), 
+                '${yearString}',
+                '${taxInfo.houseLoanBankName}',
+                ${taxInfo.houseLoanAmount},
+                '${taxInfo.houseLoanDocument}',
+                ${taxInfo.houseLoanInterest}
+                );`
+        console.log(query);
+        db.run(query, [], (error) => {
+            if(error){
+                console.log(error)
+            }else{
+                console.log("Inserted new House Loan record")
+            }
+        })
+    }
+
+    if(taxInfo.donationAmount != "") {
+        // Donation
+        query = `INSERT OR REPLACE INTO Donation VALUES (
+                (SELECT Pan_ID FROM Client WHERE Email_ID='${user.userName}'), 
+                '${yearString}',
+                ${taxInfo.donationAmount},
+                '${taxInfo.donationDocument}',
+                '${taxInfo.donationTrustName}'
+                );`
+        console.log(query);
+        db.run(query, [], (error) => {
+            if(error){
+                console.log(error)
+            }else{
+                console.log("Inserted new Donation record")
+            }
+        })
+    }
+}
+
+export function createConsultation(event: Electron.IpcMainEvent, user: User) {
+    let yearString = currFAYear()
+
+    let checkExistsQuery = `SELECT * FROM Consultation WHERE Pan_id=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`
+
+    let insertQuery = `INSERT OR REPLACE INTO Consultation VALUES (
+                (SELECT Pan_ID from Client where Email_ID = '${user.userName}'),
+                '${yearString}',
+                (SELECT T.Employee_ID FROM Tax_Consultant AS T
+                WHERE (SELECT count(*) FROM Consultation AS C WHERE C.Employee_ID=T.Employee_ID AND FA_Year='${yearString}') <= 
+                (SELECT min((SELECT count(*) FROM Consultation AS C2 WHERE C2.Employee_ID=T2.Employee_ID AND FA_Year='${yearString}')) FROM Tax_Consultant AS T2)
+                LIMIT 1),
+                'CONSULTANT_APPROVAL_PENDING')`
+
+    console.log(checkExistsQuery);
+
+    db.all(checkExistsQuery, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+
+        if(result.length == 0) {
+            db.run(insertQuery, [], (error) => {
+                if(error){
+                    console.log(error)
+                }else{
+                    console.log("Created new consultation record")
+                }
+            })
+        }else {
+            console.log("Consultation record already exists")
+        }
+        console.log(result)
     })
 }
