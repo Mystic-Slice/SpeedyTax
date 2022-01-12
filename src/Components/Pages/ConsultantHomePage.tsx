@@ -4,60 +4,49 @@ import ClientInformationDetail from './Views/ClientInformationDetail';
 import ClientInformationShort from './Views/ClientInformationShort';
 import { appTheme } from '../App';
 import SignOutIcon from '@mui/icons-material/Logout';
+import { User, UserInformation } from '../../types'
+const { ipcRenderer } = window.require("electron");
 
-export interface ClientInformation {
-    name: string,
-    email: string,
-    panId: string,
-    meetingDate: string,
-    meetingTime: string
-}
+export class ConsultantHomePage extends Component<{ user: User, signOut: () => void }> {
 
-const clients: ClientInformation[] = [
-    {
-        name: "Ashwath",
-        email: "vaashwath@gmail.com",
-        panId: "ASHW12234A",
-        meetingDate: "01/12/2021",
-        meetingTime: "1 pm"
-    },
-    {
-        name: "Kishore",
-        email: "vkishore@gmail.com",
-        panId: "KISH54332K",
-        meetingDate: "02/12/2021",
-        meetingTime: "2 pm"
-    },
-    {
-        name: "Anish",
-        email: "anish@gmail.com",
-        panId: "ANIS78199H",
-        meetingDate: "14/12/2021",
-        meetingTime: "3 pm"
-    },
-    {
-        name: "Yashasvi",
-        email: "yashasvi@gmail.com",
-        panId: "YASH93782E",
-        meetingDate: "12/12/2021",
-        meetingTime: "4 pm"
+    constructor(props: { user: User; signOut: () => void; } | Readonly<{ user: User; signOut: () => void; }>) {
+        super(props);
+        ipcRenderer.send('get-clients', this.props.user);
+        ipcRenderer.once('get-clients-reply', (event, result) => this.setClientlist(result))
     }
-]
-
-export class ConsultantHomePage extends Component<{ signOut: () => void }> {
     state = {
-        client: null as ClientInformation
+        currClient: null as UserInformation,
+        clients: [] as UserInformation[]
     }
 
-    setClient = (client: ClientInformation) => () => {
-        this.setState({client: client});
+    setClientlist = (result: any) => {
+        console.log(result)
+        let clients = [] as UserInformation[]
+        result.forEach((element: any) => {
+            let client: UserInformation = {
+                firstName: element.First_Name,
+                lastName: element.Last_Name,
+                email: element.Email_ID,
+                phoneNumber: element.Phone_Number,
+                panId: element.Pan_ID,
+                dob: element.DOB
+            }
+            clients.push(client);
+        });
+        this.setState({
+            clients: clients
+        })
+    }
+
+    setClient = (client: UserInformation) => () => {
+        this.setState({currClient: client});
     }
 
     render() {
-        const { client } = this.state;
-        if(client) {
+        const { currClient, clients } = this.state;
+        if(currClient) {
             return (
-                <ClientInformationDetail client={client} goBack={this.setClient(null as ClientInformation)}/>
+                <ClientInformationDetail client={currClient} goBack={this.setClient(null as UserInformation)}/>
             )
         }
 
@@ -86,7 +75,7 @@ export class ConsultantHomePage extends Component<{ signOut: () => void }> {
                     </Button>   
                 <div>
                     {clients.map(client => (
-                        <ClientInformationShort client={client} setClient={this.setClient}/>
+                        <ClientInformationShort key={client.panId} client={client} setClient={this.setClient}/>
                     ))}
                 </div>           
                 

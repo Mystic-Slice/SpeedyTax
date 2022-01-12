@@ -184,13 +184,11 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         margin:'20px',
                         borderRadius:'5px',
                         backgroundColor:appTheme.secondaryColor
-                    }} 
-                    >
+                    }}>
                         <div style={{                            
                             float:"left",
                             marginTop:"10px",                        
-                        }}
-                        >
+                        }}>
                             <Button style={{
                                 backgroundColor:appTheme.primaryAccentColor
                             }} 
@@ -200,22 +198,22 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         <h1 style={{textAlign:"center", marginTop:"0px"}}>Tax Information</h1>                       
                         <TaxInfoView clientTaxInfo={clientTaxInfo} user={this.props.user} handleChange={this.handleChange}/>  
                         <div style={{
-                        float:"left"
-                        }}>
-                        <Button style={{
-                            backgroundColor:appTheme.primaryAccentColor,
-                        }} 
-                        color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
+                            float:"left"
+                            }}>
+                            <Button style={{
+                                backgroundColor:appTheme.primaryAccentColor,
+                            }} 
+                            color="primary" variant="contained" onClick={this.prevStep} disabled>Previous</Button>
                         </div>      
                         <div style={{
-                        float:"right"
-                        }}>
-                        <Button style={{
-                            backgroundColor:appTheme.primaryAccentColor
-                        }} 
-                        variant="contained" 
-                        onClick={this.goToConsultation}
-                        >Next</Button>
+                            float:"right"
+                            }}>
+                            <Button style={{
+                                backgroundColor:appTheme.primaryAccentColor
+                            }} 
+                            variant="contained" 
+                            onClick={this.goToConsultation}
+                            >Next</Button>
                         </div>          
                                            
                     </div>
@@ -227,8 +225,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                     margin:'20px',
                     borderRadius:'5px',
                     backgroundColor:appTheme.secondaryColor
-                }}
-                    >
+                    }}>
                         <h1 style={{marginTop:"0px"}}>Meet with consultant</h1>
                         <Button style={{
                             backgroundColor:appTheme.primaryAccentColor

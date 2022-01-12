@@ -41,7 +41,7 @@ export function App() {
         return (
             <HashRouter>
                 <Routes>
-                    <Route path = '/' element={<ConsultantHomePage signOut={signOut}/>}></Route>
+                    <Route path = '/' element={<ConsultantHomePage signOut={signOut} user={user} />}></Route>
                 </Routes>
             </HashRouter>
         )

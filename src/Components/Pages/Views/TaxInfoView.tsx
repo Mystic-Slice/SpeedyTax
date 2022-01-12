@@ -415,7 +415,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                         InputProps = {{ readOnly: !isEditMode }}/>
                     <TextField
                         value={pfInterest}
-                        label="PF Interest Rate"
+                        label="PF Interest Rate (in %)"
                         onChange={handleChange("pfInterest")}
                         error={errorPfInterest}
                         helperText={errorPfInterest ? "Invalid Interest Rate": ""}
@@ -469,7 +469,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                         InputProps = {{ readOnly: !isEditMode }}/>
                     <TextField
                         value={houseLoanInterest}
-                        label="Loan Interest"
+                        label="Loan Interest (in %)"
                         onChange={handleChange("houseLoanInterest")}
                         error={errorHouseLoanInterest}
                         helperText={errorHouseLoanInterest ? "Invalid Interest Rate": ""}

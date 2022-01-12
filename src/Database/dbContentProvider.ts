@@ -312,3 +312,164 @@ export function createConsultation(event: Electron.IpcMainEvent, user: User) {
         console.log(result)
     })
 }
+
+export function getClients(event: Electron.IpcMainEvent, user: User) {
+    let yearString = currFAYear()
+
+    let query = `SELECT * FROM Client 
+            WHERE Pan_id IN
+            (SELECT Pan_id FROM Consultation WHERE Employee_ID=(SELECT Employee_ID from Tax_Consultant where Email_ID = '${user.userName}') AND FA_Year='${yearString}')`
+
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+
+        if(result.length == 0) {
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-clients-reply', result)
+    })
+}
+
+export function getClientInfo(event: Electron.IpcMainEvent, userInfo: UserInformation) {
+    let yearString = currFAYear()
+
+    // Primary Income
+    let query = `SELECT * FROM Income WHERE Pan_id = '${userInfo.panId}' AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-income-reply', result)
+    })
+
+    // Rent
+    query = `SELECT * FROM Rent WHERE Pan_id = '${userInfo.panId}' AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-rent-reply', result)
+    })
+
+    // Pf
+    query = `SELECT * FROM PF WHERE Pan_id = '${userInfo.panId}' AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-pf-reply', result)
+    })
+
+    // House Loan
+    query = `SELECT * FROM House_Loan WHERE Pan_id = '${userInfo.panId}' AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-house-reply', result)
+    })
+
+    // Donation
+    query = `SELECT * FROM Donation WHERE Pan_id = '${userInfo.panId}' AND FA_Year='${yearString}'`
+    console.log(query)
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-donation-reply', result)
+    })
+}
+
+export function approveClient(event: Electron.IpcMainEvent, userInfo: UserInformation) {
+    let yearString = currFAYear()
+
+    let checkQuery = `SELECT * FROM Consultation WHERE Pan_ID='${userInfo.panId}' AND FA_Year='${yearString}' AND Refund_Status='CONSULTANT_APPROVAL_PENDING'`
+    let updateQuery = `UPDATE Consultation
+                    SET Refund_Status='GOV_REFUND_PENDING'
+                    WHERE Pan_id='${userInfo.panId}' AND FA_Year='${yearString}';`
+    console.log(checkQuery)
+
+    db.all(checkQuery, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+
+        if(result.length != 0) {
+            db.run(updateQuery, [], (error) => {
+                if(error){
+                    console.log(error)
+                }else{
+                    console.log("Consultation record update")
+                }
+            })
+        }else {
+            console.log("Consultation record not updated")
+        }
+        console.log(result)
+    })
+}
+
+export function getClientStatus(event: Electron.IpcMainEvent, userInfo: UserInformation) {
+    let yearString = currFAYear()
+
+    let query = `SELECT * FROM Consultation WHERE Pan_ID='${userInfo.panId}' AND FA_Year='${yearString}'`;
+    console.log(query)
+
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-client-status-reply', result)
+    })
+}
