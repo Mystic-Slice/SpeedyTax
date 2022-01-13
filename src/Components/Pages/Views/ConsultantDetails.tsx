@@ -1,13 +1,36 @@
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
-import { appTheme } from '../../App';
+import { User } from '../../../types'
+const { ipcRenderer } = window.require("electron");
 
-export class ConsultantDetails extends Component {
+export class ConsultantDetails extends Component<{user: User}> {
+
+    constructor(props: { user: User; } | Readonly<{ user: User; }>) {
+        super(props);
+        ipcRenderer.send('get-consultant-details', this.props.user);
+        ipcRenderer.once('get-consultant-details-reply', (event, result) => this.setConsultant(result))
+        ipcRenderer.once('created-consultation', (event) => this.getConsultantDetails())
+    }
+
     state = {
-        name: "Ashwath V A",
-        email: "vaashwath@gmail.com",
-        phoneNumber: "1234567890"
-    } 
+        name: "",
+        email: "",
+        phoneNumber: ""
+    }
+
+    getConsultantDetails = () => {
+        ipcRenderer.send('get-consultant-details', this.props.user);
+        ipcRenderer.once('get-consultant-details-reply', (event, result) => this.setConsultant(result))
+    }
+
+    setConsultant = (result: any) => {
+        this.setState({
+            name: result.First_Name + " " + result.Last_Name,
+            email: result.Email_ID,
+            phoneNumber: result.Phone_Number
+        })
+    }
+
     render() {
         const { name, email, phoneNumber } = this.state;
         return (
