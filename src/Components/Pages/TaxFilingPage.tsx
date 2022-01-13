@@ -254,12 +254,12 @@ export class TaxFilingPage extends Component<{ user: User}> {
             case 3:
                 return (
                     <div style={{border:'5px solid black',
-                    padding:'10px',
-                    margin:'20px',
-                    borderRadius:'5px',
-                    backgroundColor:appTheme.secondaryColor
-                    }}
-                    >
+                        padding:'10px',
+                        margin:'20px',
+                        borderRadius:'5px',
+                        width: "60%",
+                        backgroundColor:appTheme.secondaryColor
+                        }}>
                         <h1 style={{marginTop:"0px"}}>Refund Status</h1>
                         <Button style={{
                             backgroundColor:appTheme.primaryAccentColor,
@@ -267,7 +267,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                             marginBottom:'20px'
                         }} 
                         variant="contained" component={Link} to="/">Home</Button>
-                        <RefundStatus/>
+                        <RefundStatus clientTaxInfo={clientTaxInfo} user={this.props.user}/>
                         
                         <div style={{
                         float:"left"
