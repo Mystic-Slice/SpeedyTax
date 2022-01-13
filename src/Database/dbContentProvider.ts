@@ -429,7 +429,7 @@ export function approveClient(event: Electron.IpcMainEvent, userInfo: UserInform
 
     let checkQuery = `SELECT * FROM Consultation WHERE Pan_ID='${userInfo.panId}' AND FA_Year='${yearString}' AND Refund_Status='CONSULTANT_APPROVAL_PENDING'`
     let updateQuery = `UPDATE Consultation
-                    SET Refund_Status='GOV_REFUND_PENDING'
+                    SET Refund_Status='PAYMENT_PENDING'
                     WHERE Pan_id='${userInfo.panId}' AND FA_Year='${yearString}';`
     console.log(checkQuery)
 
@@ -479,8 +479,8 @@ export function getConsultantDetails(event: Electron.IpcMainEvent, user: User) {
     let yearString = currFAYear()
 
     let query = `SELECT * FROM Tax_Consultant WHERE Employee_ID IN
-    (SELECT Employee_ID FROM Consultation WHERE 
-        Pan_ID=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}')`;
+                    (SELECT Employee_ID FROM Consultation WHERE 
+                        Pan_ID=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}')`;
     console.log(query)
 
     db.all(query, [], (error :any, result :any) => {
@@ -495,5 +495,60 @@ export function getConsultantDetails(event: Electron.IpcMainEvent, user: User) {
         }
         console.log(result)
         event.reply('get-consultant-details-reply', result)
+    })
+}
+
+export function getConsultationStatus(event: Electron.IpcMainEvent, user: User) {
+    let yearString = currFAYear()
+
+    let query = `SELECT * FROM Consultation WHERE 
+                    Pan_ID=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}'`;
+    console.log(query)
+
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-consultation-status-reply', result)
+    })
+}
+
+export function payTax(event: Electron.IpcMainEvent, user: User) {
+    let yearString = currFAYear()
+
+    let checkQuery = `SELECT count(*) FROM Consultation WHERE 
+                        Pan_ID=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}' AND Refund_Status='PAYMENT_PENDING'`
+    let updateQuery = `UPDATE Consultation
+                    SET Refund_Status='SUCCESSFUL'
+                    WHERE Pan_id=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}';`
+    console.log(checkQuery)
+
+    db.all(checkQuery, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+
+        if(result.length != 0) {
+            console.log(updateQuery)
+            db.run(updateQuery, [], (error) => {
+                if(error){
+                    console.log(error)
+                }else{
+                    console.log("Consultation record update")
+                }
+                event.reply('pay-tax-reply')
+            })
+        }else {
+            console.log("Consultation record not updated")
+        }
+        console.log(result)
     })
 }

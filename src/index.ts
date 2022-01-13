@@ -4,7 +4,8 @@ import { TaxInformation, User, UserInformation } from './types';
 import { validateUser, checkEmailExists, createUser, 
 	getUserDetails, getUserTaxInfo, saveTaxInfo, 
 	createConsultation, getClients, getClientInfo, 
-	approveClient, getClientStatus, getConsultantDetails } from './Database/dbContentProvider';
+	approveClient, getClientStatus, getConsultantDetails, 
+	getConsultationStatus, payTax } from './Database/dbContentProvider';
 const path = require('path');
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
@@ -25,6 +26,8 @@ ipcMain.on('get-client-info', (event, userInfo: UserInformation) => getClientInf
 ipcMain.on('approve-client', (event, userInfo: UserInformation) => approveClient(event, userInfo))
 ipcMain.on('get-client-status', (event, userInfo: UserInformation) => getClientStatus(event, userInfo))
 ipcMain.on('get-consultant-details', (event, user: User) => getConsultantDetails(event, user))
+ipcMain.on('get-consultation-status', (event, user: User) => getConsultationStatus(event, user))
+ipcMain.on('pay-tax', (event, user: User) => payTax(event, user))
 
 const createWindow = (): void => {
 	const mainWindow = new BrowserWindow({
