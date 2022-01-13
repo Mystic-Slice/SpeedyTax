@@ -15,8 +15,7 @@ export class RefundStatus extends Component {
                 <Card 
                     style={{
                         display: "flex"
-                    }}
-                >                    
+                    }}>
                     <div
                         style={{
                             flex: "60%"
@@ -55,7 +54,6 @@ export class RefundStatus extends Component {
                         </Button>
 
                     </div>
-
                 </Card>
             </div>
         )

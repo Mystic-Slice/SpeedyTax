@@ -231,7 +231,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                             backgroundColor:appTheme.primaryAccentColor
                         }}
                         variant="contained" component={Link} to="/">Home</Button>
-                        <ConsultantDetails/>  
+                        <ConsultantDetails user={this.props.user}/>  
                         <div style={{
                         float:"left"
                         }}>

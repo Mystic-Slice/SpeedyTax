@@ -305,6 +305,7 @@ export function createConsultation(event: Electron.IpcMainEvent, user: User) {
                 }else{
                     console.log("Created new consultation record")
                 }
+                event.reply('created-consultation')
             })
         }else {
             console.log("Consultation record already exists")
@@ -471,5 +472,28 @@ export function getClientStatus(event: Electron.IpcMainEvent, userInfo: UserInfo
         }
         console.log(result)
         event.reply('get-client-status-reply', result)
+    })
+}
+
+export function getConsultantDetails(event: Electron.IpcMainEvent, user: User) {
+    let yearString = currFAYear()
+
+    let query = `SELECT * FROM Tax_Consultant WHERE Employee_ID IN
+    (SELECT Employee_ID FROM Consultation WHERE 
+        Pan_ID=(SELECT Pan_ID from Client where Email_ID = '${user.userName}') AND FA_Year='${yearString}')`;
+    console.log(query)
+
+    db.all(query, [], (error :any, result :any) => {
+        if(error){
+            console.log(error);
+            return;
+        }
+        if(result.length > 0) {
+            result = result[0]
+        }else{
+            result = 0
+        }
+        console.log(result)
+        event.reply('get-consultant-details-reply', result)
     })
 }

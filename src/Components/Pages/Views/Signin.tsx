@@ -16,9 +16,9 @@ export class Signin extends Component<{ handleSubmit: (user: User) => void }> {
     }
 
     state = {
-        userName: "yuvraj@gmail.com",
-        password: "Yuvraj@0001",
-        type: "consultant",
+        userName: "mukesh@gmail.com",
+        password: "Mukesh@0001",
+        type: "client",
         errorUserName: false,
         errorPassword: false
     }
