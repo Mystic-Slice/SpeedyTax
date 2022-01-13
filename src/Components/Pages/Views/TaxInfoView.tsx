@@ -307,8 +307,27 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
             errorHouseLoanAmount, errorHouseLoanInterest, errorHouseLoanBankName, errorHouseLoanDocument,
             errorDonationAmount, errorDonationTrustName, errorDonationDocument } = this.state;
         return (
-            <div>
-                <h1 style={{margin:'1px'}}>Primary Income:</h1>                
+            <div style={{
+                marginBottom: "10px"
+            }}>
+                <div style={{
+                        float: "right",
+                        marginTop: "-60px",
+                        paddingLeft:"10px"
+                    }}>
+                        <Button style={{
+                            backgroundColor:appTheme.secondaryAccentColor
+                        }} 
+
+                        color="primary" 
+                        variant="contained" 
+                        onClick={this.switchEditMode}
+                        startIcon={isEditMode?<SaveIcon/>: <EditIcon/>}>
+                        {isEditMode?"Save": "Edit"}
+                </Button>
+                </div >
+                <h2 style={{margin:'0px'}}>Income</h2>
+                <h3 style={{margin:'1px'}}>Primary Income</h3>
                     <TextField
                         value={primaryIncomeAmount}
                         label="Income Amount"
@@ -338,6 +357,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                         <Button style={{
                             marginTop:"30px",
                             marginLeft:"10px",
+                            float: "right",
                             backgroundColor:appTheme.secondaryAccentColor
                         }}
                             variant="contained"
@@ -351,7 +371,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                             />
                         </Button> 
                    
-                <h1 style={{margin:'1px'}}>Rent</h1>
+                <h3 style={{margin:'1px'}}>Rent</h3>
                     <TextField
                         value={rentAmount}
                         label="Rent Amount"
@@ -370,7 +390,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                         InputProps = {{ readOnly: !isEditMode }}/>
                     <TextField
                         value={rentStreetName}
-                        label="Street Name"
+                        label="City"
                         onChange={handleChange("rentStreetName")}
                         error={errorRentStreetName}
                         helperText={errorRentStreetName ? "Please fill Street name": ""}
@@ -404,7 +424,9 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                             />
                         </Button>
                     </div> 
-                <h1 style={{margin:'1px'}} >PF</h1>
+
+                <h2 style={{margin:'0px'}}>Deductible</h2>
+                <h3 style={{margin:'1px'}} >PF</h3>
                     <TextField
                         value={pfAmount}
                         label="PF Amount"
@@ -458,7 +480,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                             />
                         </Button>
                     </div> 
-                <h1 style={{margin:'1px'}} >House Loan</h1>
+                <h3 style={{margin:'1px'}} >House Loan</h3>
                     <TextField
                         value={houseLoanAmount}
                         label="Loan Amount"
@@ -512,7 +534,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                             />
                         </Button>
                     </div> 
-                <h1 style={{margin:'1px'}} >Donation</h1>
+                <h3 style={{margin:'1px'}} >Donation</h3>
                     <TextField
                         value={donationAmount}
                         label="Donation Amount"
@@ -542,6 +564,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                         <Button style={{
                             marginTop:"30px" ,
                             marginLeft:"10px",
+                            float: "right",
                             backgroundColor:appTheme.secondaryAccentColor
                         }}
                             variant="contained"
@@ -553,27 +576,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
                                 type="file"
                                 hidden
                             />
-                        </Button>
-
-                <div style={{
-                        display: "inline",
-                        float: "right",
-                        marginTop: "30px",
-                        paddingLeft:"10px"
-                    }}>
-                        <Button style={{
-                            backgroundColor:appTheme.secondaryAccentColor
-                        }} 
-
-                        color="primary" 
-                        variant="contained" 
-                        onClick={this.switchEditMode}
-                        startIcon={isEditMode?<SaveIcon/>: <EditIcon/>}>
-                        {isEditMode?"Save": "Edit"}
-                </Button>
-
-                </div >
-                
+                        </Button>                
             </div>
         )
     }

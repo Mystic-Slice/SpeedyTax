@@ -82,9 +82,10 @@ export class RefundStatus extends Component<{clientTaxInfo: TaxInformation, user
             <div>
                 <Card 
                     style={{
-                        display: "flex"
+                        display: "flex",
+                        paddingLeft: "5px"
                     }}>
-                    <div style={{ flex: "40%" }}>
+                    <div style={{ flex: "50%" }}>
                     <TextField
                         value={totalTax}
                         label="Total Tax"
@@ -98,14 +99,16 @@ export class RefundStatus extends Component<{clientTaxInfo: TaxInformation, user
                         label={"Tax to be paid"}
                         fullWidth/>
                     </div>
-                    <div style={{flex: "60%", flexDirection: "column", backgroundColor: appTheme.secondaryAccentColor}}>
+                    <div style={{flex: "50%", flexDirection: "column", backgroundColor: appTheme.secondaryAccentColor}}>
                         <Card style={{
                             width: "100%",
                             height: "70%",
                             backgroundColor: status,
-                            margin: "auto",
                             textAlign:"center",
-                            fontSize: "30px"
+                            fontSize: "30px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
                         }}>
                         {status == 'red' ? 'Consultant approval pending': status == 'yellow' ? 'Payment pending' : 'Successful'}
                         </Card>
@@ -124,8 +127,10 @@ export class RefundStatus extends Component<{clientTaxInfo: TaxInformation, user
                 <Button 
                     style={{
                         width: "100%",
-                        height: "30%"
+                        height: "30%",
+                        marginTop: "10px"
                     }}
+                    variant="contained"
                     color="primary"
                     onClick={this.pay}
                     disabled={status != 'yellow'}>

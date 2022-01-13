@@ -195,7 +195,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                             variant="contained" component={Link} to="/">Home</Button>
                         </div>
                         
-                        <h1 style={{textAlign:"center", marginTop:"0px"}}>Tax Information</h1>                       
+                        <h1 style={{paddingLeft: "240px", marginTop:"10px"}}>Tax Information</h1>                       
                         <TaxInfoView clientTaxInfo={clientTaxInfo} user={this.props.user} handleChange={this.handleChange}/>  
                         <div style={{
                             float:"left"
@@ -258,6 +258,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         margin:'20px',
                         borderRadius:'5px',
                         width: "60%",
+                        maxWidth: "500px",
                         backgroundColor:appTheme.secondaryColor
                         }}>
                         <h1 style={{marginTop:"0px"}}>Refund Status</h1>

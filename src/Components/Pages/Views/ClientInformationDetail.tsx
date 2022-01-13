@@ -4,6 +4,10 @@ import { TaxInformation, UserInformation } from '../../../types'
 import { appTheme } from '../../App'
 const { ipcRenderer } = window.require("electron");
 
+const fontColor = {
+    style: { color: 'rgb(0,0,0)' }
+}
+
 export class ClientInformationDetail extends Component<{ client: UserInformation, goBack: () => void }> {
 
     constructor(props: { client: UserInformation; goBack: () => void } | Readonly<{ client: UserInformation; goBack: () => void }>) {
@@ -136,20 +140,22 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                 padding: "20px",
                 backgroundColor:"#f5f5f5",
             }}>
-                <h3 style={{marginTop:"0px"}}>Client Name: {client.firstName}</h3>
+                <h1 style={{marginTop:"0px"}}>Client Name: {client.firstName}</h1>
                 
-
+                <h2>Income</h2>
                 <h3 style={{margin:'1px'}}>Primary Income</h3>                
                     <TextField
                         value={primaryIncomeAmount}
                         label="Income Amount"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
 
                     <TextField
                         value={primaryIncomeCompany}
                         label="Company Name"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                    
                 <h3 style={{margin:'1px'}}>Rent</h3>
@@ -157,33 +163,41 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         value={rentAmount}
                         label="Rent Amount"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={rentDoorNo}
                         label="Door No."
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={rentStreetName}
                         label="Street Name"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
+
+                <h2>Deductible</h2>
                     
                 <h3 style={{margin:'1px'}} >PF</h3>
                     <TextField
                         value={pfAmount}
                         label="PF Amount"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={pfInterest}
-                        label="PF Interest Rate"
+                        label="PF Interest Rate (in %)"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={pfBankName}
                         label="Bank Name"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
 
                 <h3 style={{margin:'1px'}} >House Loan</h3>
@@ -191,16 +205,19 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         value={houseLoanAmount}
                         label="Loan Amount"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={houseLoanInterest}
-                        label="Loan Interest"
+                        label="Loan Interest (in %)"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={houseLoanBankName}
                         label="Bank Name"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
 
                 <h3 style={{margin:'1px'}} >Donation</h3>
@@ -208,11 +225,13 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         value={donationAmount}
                         label="Donation Amount"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <TextField
                         value={donationTrustName}
                         label="Trust Name"
                         margin="normal"
+                        inputProps={fontColor}
                         disabled/>
                     <br/>
 
@@ -229,7 +248,8 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         style={{                        
                             backgroundColor: appTheme.primaryAccentColor,
                             boxShadow:"2px 2px",
-                            marginTop: "20px"
+                            marginTop: "20px",
+                            float: "right"
                         }}
                         onClick={this.approve}>
                         Approve
