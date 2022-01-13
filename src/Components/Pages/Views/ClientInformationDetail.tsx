@@ -4,6 +4,10 @@ import { TaxInformation, UserInformation } from '../../../types'
 import { appTheme } from '../../App'
 const { ipcRenderer } = window.require("electron");
 
+
+const fontColor = {
+    style: { color: 'rgb(0,0,0)'}
+}
 export class ClientInformationDetail extends Component<{ client: UserInformation, goBack: () => void }> {
 
     constructor(props: { client: UserInformation; goBack: () => void } | Readonly<{ client: UserInformation; goBack: () => void }>) {
@@ -144,54 +148,63 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         value={primaryIncomeAmount}
                         label="Income Amount"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
 
                     <TextField
                         value={primaryIncomeCompany}
                         label="Company Name"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                    
                 <h3 style={{margin:'1px'}}>Rent</h3>
                     <TextField
                         value={rentAmount}
                         label="Rent Amount"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={rentDoorNo}
                         label="Door No."
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={rentStreetName}
                         label="Street Name"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     
                 <h3 style={{margin:'1px'}} >PF</h3>
                     <TextField
                         value={pfAmount}
                         label="PF Amount"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={pfInterest}
                         label="PF Interest Rate"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={pfBankName}
                         label="Bank Name"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
 
                 <h3 style={{margin:'1px'}} >House Loan</h3>
                     <TextField
                         value={houseLoanAmount}
                         label="Loan Amount"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={houseLoanInterest}
                         label="Loan Interest"
@@ -201,19 +214,22 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         value={houseLoanBankName}
                         label="Bank Name"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
 
                 <h3 style={{margin:'1px'}} >Donation</h3>
                     <TextField
                         value={donationAmount}
                         label="Donation Amount"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <TextField
                         value={donationTrustName}
                         label="Trust Name"
                         margin="normal"
-                        disabled/>
+                        disabled
+                        inputProps={fontColor}/>
                     <br/>
 
                     <Button 
@@ -224,16 +240,23 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         }}
                         onClick={goBack}>
                         Go Back
-                        </Button>
-                    <Button 
-                        style={{                        
-                            backgroundColor: appTheme.primaryAccentColor,
-                            boxShadow:"2px 2px",
-                            marginTop: "20px"
-                        }}
-                        onClick={this.approve}>
-                        Approve
-                        </Button>
+                    </Button>
+
+                    <div style={{
+                            width:"100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                        }}>
+                        <Button 
+                                style={{                        
+                                    backgroundColor: appTheme.primaryAccentColor,
+                                    boxShadow:"2px 2px",
+                                }}
+                                 onClick={this.approve}>
+                                Approve
+                            </Button>
+                        </div>                    
                 </div >
         )
     }
