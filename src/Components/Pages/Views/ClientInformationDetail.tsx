@@ -1,5 +1,6 @@
-import { Button, TextField } from '@material-ui/core'
+import { Button, Icon, TextField } from '@material-ui/core'
 import React, { Component } from 'react'
+import DownloadIcon from '@mui/icons-material/Download';
 import { TaxInformation, UserInformation } from '../../../types'
 import { appTheme } from '../../App'
 const { ipcRenderer } = window.require("electron");
@@ -141,7 +142,6 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                 backgroundColor:"#f5f5f5",
             }}>
                 <h1 style={{marginTop:"0px"}}>Client Name: {client.firstName}</h1>
-                
                 <h2>Income</h2>
                 <h3 style={{margin:'1px'}}>Primary Income</h3>                
                     <TextField
@@ -157,7 +157,17 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>
-                   
+                    <Button 
+                        style={{
+                            color:"white",
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            float: "right",
+                            backgroundColor: appTheme.secondaryAccentColor
+                        }}
+                        variant="contained">
+                        <DownloadIcon/>
+                    </Button>
                 <h3 style={{margin:'1px'}}>Rent</h3>
                     <TextField
                         value={rentAmount}
@@ -177,7 +187,17 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>
-
+                    <Button
+                        style={{
+                            color:"white",
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            float: "right",
+                            backgroundColor: appTheme.secondaryAccentColor
+                        }}
+                        variant="contained">
+                        <DownloadIcon/>
+                    </Button>
                 <h2>Deductible</h2>
                     
                 <h3 style={{margin:'1px'}} >PF</h3>
@@ -199,7 +219,17 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>
-
+                    <Button
+                        style={{
+                            color:"white",
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            float: "right",
+                            backgroundColor: appTheme.secondaryAccentColor
+                        }}
+                        variant="contained">
+                        <DownloadIcon/>
+                    </Button>
                 <h3 style={{margin:'1px'}} >House Loan</h3>
                     <TextField
                         value={houseLoanAmount}
@@ -219,7 +249,17 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>
-
+                    <Button
+                        style={{
+                            color:"white",
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            float: "right",
+                            backgroundColor: appTheme.secondaryAccentColor
+                        }}
+                        variant="contained">
+                        <DownloadIcon/>
+                    </Button>
                 <h3 style={{margin:'1px'}} >Donation</h3>
                     <TextField
                         value={donationAmount}
@@ -233,6 +273,17 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>
+                    <Button
+                        style={{
+                            color:"white",
+                            marginTop:"30px",
+                            marginLeft:"10px",
+                            float: "right",
+                            backgroundColor: appTheme.secondaryAccentColor
+                        }}
+                        variant="contained">
+                        <DownloadIcon/>
+                    </Button>
                     <br/>
 
                     <Button 

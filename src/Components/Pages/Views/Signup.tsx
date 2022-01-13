@@ -17,13 +17,13 @@ const regex = {
 export class Signup extends Component<{ handleSubmit: (user: User) => void }> {
 
     state = {
-        userName: "kishore@gmail.com",
-        password: "Kishore@0001",
-        panId: "ZZZZX1234W",
-        firstName: "Kishore",
-        lastName: "V",
-        phoneNumber: "1234567890",
-        dob: "1998-01-01",
+        userName: "",
+        password: "",
+        panId: "",
+        firstName: "",
+        lastName: "",
+        phoneNumber: "",
+        dob: "",
         errorUserName: false,
         errorPassword: false,
         errorPanId: false,
