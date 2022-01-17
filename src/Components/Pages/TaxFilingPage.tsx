@@ -41,7 +41,8 @@ export class TaxFilingPage extends Component<{ user: User}> {
         houseLoanDocument: "",
         donationAmount: "",
         donationTrustName: "",
-        donationDocument: ""
+        donationDocument: "",
+        isEditMode: false
     }
 
     setIncome = (result: any) => {
@@ -129,6 +130,10 @@ export class TaxFilingPage extends Component<{ user: User}> {
         this.setState({ [input]: event.target.value });
     }
 
+    handleEditModeChange = ():void => {
+        this.setState({isEditMode: this.state.isEditMode ? false : true});
+    }
+
     nextStep = () => {
         const { step } = this.state;
         this.setState({ step: step + 1});
@@ -149,7 +154,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
     }
 
     render() {
-        const { step, primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
+        const { isEditMode, step, primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
             rentAmount, rentDoorNo, rentStreetName, rentDocument,
             pfAmount, pfInterest, pfBankName, pfDocument,
             houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument,
@@ -196,7 +201,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         </div>
                         
                         <h1 style={{paddingLeft: "240px", marginTop:"10px"}}>Tax Information</h1>                       
-                        <TaxInfoView clientTaxInfo={clientTaxInfo} user={this.props.user} handleChange={this.handleChange}/>  
+                        <TaxInfoView clientTaxInfo={clientTaxInfo} user={this.props.user} isEditMode={isEditMode} handleChange={this.handleChange} handleEditModeChange={this.handleEditModeChange}/>  
                         <div style={{
                             float:"left"
                             }}>
@@ -208,7 +213,7 @@ export class TaxFilingPage extends Component<{ user: User}> {
                         <div style={{
                             float:"right"
                             }}>
-                            <Button style={{
+                            <Button  disabled={isEditMode} style={{
                                 backgroundColor:appTheme.primaryAccentColor
                             }} 
                             variant="contained" 
