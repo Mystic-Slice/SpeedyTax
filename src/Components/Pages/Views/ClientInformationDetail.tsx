@@ -183,7 +183,7 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                         disabled/>
                     <TextField
                         value={rentStreetName}
-                        label="Street Name"
+                        label="City"
                         margin="normal"
                         inputProps={fontColor}
                         disabled/>

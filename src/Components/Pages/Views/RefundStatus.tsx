@@ -110,7 +110,7 @@ export class RefundStatus extends Component<{clientTaxInfo: TaxInformation, user
                             justifyContent: "center",
                             alignItems: "center"
                         }}>
-                        {status == 'red' ? 'Consultant approval pending': status == 'yellow' ? 'Payment pending' : 'Successful'}
+                        {status == 'red' ? 'Consultant Approval Pending': status == 'yellow' ? 'Payment Pending' : 'Successful'}
                         </Card>
                         <Button 
                             style={{

@@ -25,8 +25,10 @@ export class ClientInformationShort extends Component<{ client: UserInformation,
         let status = result.Refund_Status
         if(status == 'CONSULTANT_APPROVAL_PENDING') {
             status = 'Approval pending'
-        } else {
+        } else if(status == 'PAYMENT_PENDING') {
             status = 'Payment pending'
+        } else {
+            status = 'Complete'
         }
 
         this.setState({
