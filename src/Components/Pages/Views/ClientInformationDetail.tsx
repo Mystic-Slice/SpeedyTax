@@ -19,9 +19,12 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
         ipcRenderer.once('get-client-pf-reply', (event, result) => this.setPf(result))
         ipcRenderer.once('get-client-house-reply', (event, result) => this.setHouseLoan(result))
         ipcRenderer.once('get-client-donation-reply', (event, result) => this.setDonation(result))
+        ipcRenderer.send('get-client-status', this.props.client)
+        ipcRenderer.once('get-client-status-reply', (event, result) => this.setStatus(result))
     }
 
     state = {
+        approveEnable: true,
         primaryIncomeAmount: "",
         primaryIncomeCompany: "",
         primaryIncomeDocument: "",
@@ -40,6 +43,20 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
         donationAmount: "",
         donationTrustName: "",
         donationDocument: ""
+    }
+
+    setStatus = (result: any) => {
+        console.log(result)
+
+        let status = result.Refund_Status
+        let approve = false;
+        if(status == 'CONSULTANT_APPROVAL_PENDING') {
+            approve = true;
+        }
+
+        this.setState({
+            approveEnable: approve
+        })
     }
 
     setIncome = (result: any) => {
@@ -125,6 +142,11 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
 
     approve = () => {
         ipcRenderer.send('approve-client', this.props.client)
+
+        setTimeout(() => {
+            ipcRenderer.send('get-client-status', this.props.client)
+            ipcRenderer.once('get-client-status-reply', (event, result) => this.setStatus(result))
+        }, 2000)
     }
 
     render() {
@@ -302,6 +324,7 @@ export class ClientInformationDetail extends Component<{ client: UserInformation
                             marginTop: "20px",
                             float: "right"
                         }}
+                        disabled={!this.state.approveEnable}
                         onClick={this.approve}>
                         Approve
                         </Button>

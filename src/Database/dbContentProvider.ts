@@ -3,7 +3,7 @@ import { db } from './dbHelper';
 
 function currFAYear() {
     let date: Date = new Date();
-    let year = date.getFullYear()-1;
+    let year = date.getFullYear();
     let pastYear = year-1
     let yearString = pastYear.toString() + '-' + year.toString().substring(2)
     console.log(yearString)
