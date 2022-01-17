@@ -6,10 +6,10 @@ import EditIcon from '@material-ui/icons/Edit'
 import { TaxInformation, User } from '../../../types'
 const { ipcRenderer } = window.require("electron");
 
-export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user: User, handleChange: (input:any) => any }> {
+export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user: User, isEditMode: boolean, handleChange: (input:any) => any, 
+        handleEditModeChange: () => void }> {
 
     state = {
-        isEditMode: false,
         errorPrimaryIncomeAmount: false,
         errorPrimaryIncomeCompany: false,
         errorPrimaryIncomeDocument: false,
@@ -31,7 +31,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
     }
 
     switchEditMode = () => {
-        const { isEditMode } = this.state;
+        const { isEditMode } = this.props;
         console.log(this.props.clientTaxInfo)
         if(isEditMode) {
             const { primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
@@ -53,7 +53,7 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
         if(isEditMode) {
             ipcRenderer.send('save-tax-info', this.props.clientTaxInfo, this.props.user)
         }
-        this.setState({isEditMode: isEditMode ? false : true});
+        this.props.handleEditModeChange();
     }
 
     validatePrimaryIncome = (
@@ -294,13 +294,13 @@ export class TaxInfoView extends Component<{ clientTaxInfo: TaxInformation, user
     }
 
     render() {
-        const { clientTaxInfo, handleChange } = this.props
+        const { isEditMode, clientTaxInfo, handleChange } = this.props
         const { primaryIncomeAmount, primaryIncomeCompany, primaryIncomeDocument, 
             rentAmount, rentDoorNo, rentStreetName, rentDocument,
             pfAmount, pfInterest, pfBankName, pfDocument,
             houseLoanAmount, houseLoanInterest, houseLoanBankName, houseLoanDocument,
             donationAmount, donationTrustName, donationDocument } = clientTaxInfo
-        const { isEditMode, 
+        const {
             errorPrimaryIncomeAmount, errorPrimaryIncomeCompany, errorPrimaryIncomeDocument, 
             errorRentAmount, errorRentDoorNo, errorRentStreetName, errorRentDocument,
             errorPfAmount, errorPfInterest, errorPfBankName, errorPfDocument,
