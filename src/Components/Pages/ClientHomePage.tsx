@@ -16,12 +16,12 @@ export class ClientHomePage extends Component<{ signOut: () => void, user: User 
     }
 
     state = {
-        firstName: "Ashwath",
-        lastName: "V A",
-        email: "vaashwath@gmail.com",
-        phoneNumber: "7339099303",
-        panId: "ASDFG1234A",
-        dob: "2002-07-21"
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        panId: "",
+        dob: ""
     }
 
     setUserInfo = (userInfo: UserInformation) => {
