@@ -12,5 +12,10 @@
 * **Database:** Sqlite3
 * **Language:** TypeScript
 
+**To build and run**
+1. Clone the repository
+2. `npm i` -> To install all the dependencies
+3. `npm start`
+
 https://user-images.githubusercontent.com/73862377/156177330-10b3900e-e83b-4c3f-9ece-4632ca4a0567.mp4
 
